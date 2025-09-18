@@ -1,0 +1,106 @@
+<template>
+  <v-card flat class="pt-5">
+    <v-row>
+      <v-col cols="12" sm="12" md="6" lg="6">
+        <v-form @submit.prevent="e => e.preventDefault()">
+          <template v-for="([key, field]) in Object.entries(props.fields)" :key="key">
+            <component
+              :is="componentMap[field.component] || InputField"
+              :name="`${key}`"
+              :field-id="key"
+              hide-details="auto"
+              :model-value="fieldValues[key]"
+              v-bind="field.props"
+              :error-message="errors"
+              clearable
+              class="mb-3 mt-3"
+              @update:model-value="onUpdate($event, key)"/>
+          </template>
+        </v-form>
+      </v-col>
+      <v-col cols="12" sm="12" md="6" lg="6">
+        <div
+          style="height: 100%;
+          border: 1px solid #E2E2E2;
+          background-color: rgba(253,241,220,0.44);">
+          <div class="p-2 text-left text-base text-gray-800/90">
+            <p v-for="(note, index) in notes" class="mb-5" :key="index">
+              {{ rt(note) }}
+            </p>
+          </div>
+        </div>
+      </v-col>
+    </v-row>
+
+  </v-card>
+
+</template>
+<script setup>
+
+import InputField from "~/components/Fields/InputField.vue";
+import NameHistoryField from "~/components/Fields/NameHistoryField.vue";
+import AddressHistoryField from "~/components/Fields/AddressHistoryField.vue";
+import SelectField from "~/components/Fields/SelectField.vue";
+import RadioField from "~/components/Fields/RadioField.vue";
+import FieldSet from "~/components/Fields/FieldSet.vue";
+import {useForm} from "vee-validate";
+import {useSchema} from "~/composables/useSchema.js";
+import {toTypedSchema} from "@vee-validate/yup";
+
+const {tm, rt, t} = useI18n()
+
+const props = defineProps({
+  formName: String,
+  data: {
+    type: Object,
+    required: true,
+  },
+  fields: {
+    type: Object,
+    default: () => ({}),
+  }
+})
+const componentMap = {
+  InputField,
+  SelectField,
+  NameHistoryField,
+  AddressHistoryField,
+  RadioField,
+  FieldSet,
+}
+
+const schema = useSchema()
+const {errors, meta} = useForm({
+  validationSchema: toTypedSchema(schema[props.formName]),
+})
+
+const notes = tm(`forms.${props.formName}.notes`)
+
+const emits = defineEmits(['update'])
+const fieldValues = ref({})
+
+Object.keys(props.fields).forEach((key) => {
+  fieldValues.value[key] = props.data[key] || null
+})
+
+watch(() => props.data, (data) => {
+  Object.keys(props.fields).forEach((key) => {
+    fieldValues.value[key] = data[key] || null
+  })
+}, {deep: true})
+watch(() => meta, (meta) => {
+  emits('update', {values: fieldValues.value, meta: meta.value})
+}, {deep: true})
+watch(() => errors, (errors) => {
+  console.log(errors.value)
+}, {deep: true})
+
+const onUpdate = (data, key) => {
+  fieldValues.value[key] = data
+}
+watch(() => fieldValues, (fieldValues) => {
+  emits('update', {values: fieldValues.value, meta: meta.value})
+}, {deep: true})
+
+
+</script>

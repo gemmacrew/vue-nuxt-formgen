@@ -1,0 +1,65 @@
+{
+  "$vuetify": {
+    "stepper": {
+      "next": "suivante",
+      "prev":  "précédente"
+    },
+    "open": "Ouvrir"
+  },
+  "components": {
+    "fields": {
+      "firstName": {
+        "label": "Prénom",
+        "placeholder": "Entrez votre prénom"
+      },
+      "lastName": {
+        "label": "Nom de famille",
+        "placeholder": "Entrez votre nom de famille"
+      }
+    }
+  },
+  "pages": {
+    "auth": {
+      "login": {
+        "title": "Connexion",
+        "subtitle": "Entrez vos identifiants pour vous connecter"
+      },
+      "register": {
+        "title": "Inscription",
+        "subtitle": "Entrez vos identifiants pour enregistrer votre compte"
+      },
+      "fields": {
+        "email": {
+          "label": "E-mail",
+          "placeholder": "Entrez votre email"
+        },
+        "password": {
+          "label": "Mot de passe",
+          "placeholder": "Entrez votre mot de passe"
+        },
+        "confirmPassword": {
+          "label": "Confirmez le mot de passe",
+          "placeholder": "Entrez votre mot de passe de confirmation"
+        }
+      },
+      "messages": {
+        "passwordMismatch": "Les mots de passe ne correspondent pas",
+        "passwordRequired": "Un mot de passe est requis",
+        "emailRequired": "l'e-mail est requis",
+        "registerLink": "Pas de compte? Inscrivez-vous gratuitement ici",
+        "loginLink": "Déjà inscrit? Connectez-vous ici"
+      }
+    },
+    "apply": {
+      "title": "Demander une vérification DBS de Base",
+      "subtitle": "Remplissez le formulaire ci-dessous pour demander une vérification DBS de base."
+    }
+  },
+  "config": {
+    "titles": {
+      "mr": "M.",
+      "mrs": "Mme",
+      "ms": "Mlle"
+    }
+  }
+}

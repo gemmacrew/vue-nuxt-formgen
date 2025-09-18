@@ -1,0 +1,7 @@
+@use 'vuetify' with (
+    // Global Vuetify SASS variable overrides.  For example:
+    // $utilities: false,
+    // $reset: false,
+    // $color-pack: false,
+     $body-font-family: sans-serif
+);

@@ -1,0 +1,151 @@
+<template>
+
+  <HistoryField v-model="value"
+                v-bind="{...$attrs}"
+                :form="form"
+                :error-message="errors && errors.length ? errors[0] : ''"
+                :name="name">
+
+    <template v-slot:default="{ fieldValues, errorMessages }">
+
+      <v-autocomplete
+        return-object
+        :model-value="selectedAddress"
+        :placeholder="$t('components.fields.searchAddress.placeholder')"
+        :search="search"
+        :custom-filter="() => true"
+        hide-no-data
+        autocomplete="off"
+        @update:search="search = $event"
+        @update:model-value="onUpdateValue($event, fieldValues)"
+        variant="outlined"
+        :items="items">
+      </v-autocomplete>
+
+      <component
+        v-for="([key, field]) in Object.entries(form.fields)" :key="key"
+        :is="componentMap[field.component] || InputField"
+        :name="`${key}`"
+        class="mb-2"
+        :field-id="`${key}`"
+        v-model="fieldValues[key]"
+        :error-message="errorMessages?.[key]"
+        v-bind="field.props"
+      />
+
+    </template>
+
+  </HistoryField>
+
+</template>
+
+<script setup>
+
+import InputField from "~/components/Fields/InputField.vue";
+import HistoryField from "~/components/Fields/HistoryField.vue";
+import SelectField from "~/components/Fields/SelectField.vue";
+import {useField} from "vee-validate";
+
+const props = defineProps({
+  name: String,
+  modelValue: Array,
+  form: Object,
+})
+
+const componentMap = {
+  InputField,
+  SelectField
+}
+
+const selectedAddress = ref()
+const search = ref('')
+const items = ref([])
+const {value} = useField(() => props.name, undefined, {
+  syncVModel: true,
+});
+
+value.value = props.modelValue
+
+let geocoder
+let token
+let autocompleteSuggestion
+
+onMounted(async () => {
+
+  const {AutocompleteSessionToken, AutocompleteSuggestion} =
+    await google.maps.importLibrary("places");
+
+  geocoder = new google.maps.Geocoder();
+  token = new AutocompleteSessionToken();
+  autocompleteSuggestion = AutocompleteSuggestion
+})
+
+async function doLookup(search) {
+
+  const includeTypes = ['street_address', 'premise', 'subpremise', 'route']
+  const includeFn = result => includeTypes.some(type => result.types.includes(type))
+
+  geocoder.geocode({address: search}, async (results, status) => {
+      //if its a postcode lookup get the closest addresses based on location
+      if (results && results[0]?.types.find(t => t.startsWith('postal_code'))) {
+        const latlng = results[0].geometry.location
+        geocoder.geocode({location: latlng}, (results, status) => {
+
+          if (status === 'OK') {
+            items.value = results.filter(includeFn).map(result => ({
+              title: result.formatted_address,
+              value: result.place_id,
+            }))
+          }
+        })
+      } else {
+        let request = {
+          input: search,
+          language: "en-GB",
+          region: "gb",
+          sessionToken: token
+        };
+
+        // Fetch autocomplete suggestions.
+        const {suggestions} =
+          await autocompleteSuggestion.fetchAutocompleteSuggestions(request);
+
+        items.value = suggestions.map(suggestion => suggestion.placePrediction).map(placePrediction => ({
+          title: placePrediction.text.toString(),
+          value: placePrediction.placeId
+        }))
+      }
+    }
+  )
+}
+
+const onUpdateValue = async (selectedAddress, fieldValues) => {
+  if (selectedAddress) {
+    const {value: placeId} = selectedAddress
+    geocoder.geocode({placeId}, async (results, status) => {
+      if (status === 'OK') {
+        Object.keys(props.form.fields).forEach(key => {
+          fieldValues[key] = results[0].address_components.find(c => c.types.includes(toSnakeCase(key)))?.long_name
+        })
+      }
+    })
+  }
+}
+const toSnakeCase = (e) => {
+  return e.match(/([A-Z])/g) ? e.match(/([A-Z])/g).reduce(
+    (str, c) => str.replace(new RegExp(c), '_' + c.toLowerCase()),
+    e
+  )
+    .substring((e.slice(0, 1).match(/([A-Z])/g)) ? 1 : 0) : e;
+};
+
+watch(search, async (newSearch) => {
+  if (newSearch.length > 2) {
+    await doLookup(newSearch)
+  } else {
+    items.value = []
+  }
+
+}, {debounce: 500, deep: true})
+
+</script>
