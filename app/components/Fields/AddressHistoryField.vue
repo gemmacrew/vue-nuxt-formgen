@@ -3,7 +3,7 @@
   <HistoryField v-model="value"
                 v-bind="{...$attrs}"
                 :form="form"
-                :error-message="errors && errors.length ? errors[0] : ''"
+                :error-message="errorMessage?.[name]"
                 :name="name">
 
     <template v-slot:default="{ fieldValues, errorMessages }">
@@ -23,13 +23,14 @@
       </v-autocomplete>
 
       <component
-        v-for="([key, field]) in Object.entries(form.fields)" :key="key"
+        v-for="([key, field], index) in Object.entries(form.fields)" :key="key"
         :is="componentMap[field.component] || InputField"
         :name="`${key}`"
         class="mb-2"
+        clearable
         :field-id="`${key}`"
         v-model="fieldValues[key]"
-        :error-message="errorMessages?.[key]"
+        :error-message="errorMessages || {}"
         v-bind="field.props"
       />
 
@@ -44,12 +45,18 @@
 import InputField from "~/components/Fields/InputField.vue";
 import HistoryField from "~/components/Fields/HistoryField.vue";
 import SelectField from "~/components/Fields/SelectField.vue";
-import {useField} from "vee-validate";
 
 const props = defineProps({
   name: String,
-  modelValue: Array,
+  modelValue: {
+    type: Array,
+    default: () => []
+  },
   form: Object,
+  errorMessage: {
+    type: Object,
+    default: () => ({})
+  },
 })
 
 const componentMap = {
@@ -60,11 +67,8 @@ const componentMap = {
 const selectedAddress = ref()
 const search = ref('')
 const items = ref([])
-const {value} = useField(() => props.name, undefined, {
-  syncVModel: true,
-});
-
-value.value = props.modelValue
+const value = ref([])
+value.value = props.modelValue.slice()
 
 let geocoder
 let token

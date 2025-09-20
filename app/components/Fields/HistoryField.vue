@@ -3,7 +3,7 @@
     <v-card
       flat
       style="border-width: 2px; border-color: #AAA;"
-      :class="{ error: !!errorMessage }"
+      :class="{ error: !!errorMessage?.[name]  }"
       class="mx-auto w-full"
     >
       <v-card-title class="d-flex !text-md text-gray-800/75">
@@ -15,9 +15,10 @@
                  @click="onClickAddHistoryItem"></v-btn>
         </div>
       </v-card-title>
+
       <v-list lines="one">
         <v-list-item
-          v-for="(value, index) in localHistoryItems"
+          v-for="(field, index) in fields"
           :key="index"
           style="border-top: 1px solid #AAA;"
           class="mb-1"
@@ -25,20 +26,20 @@
           <template #prepend>
             <v-icon class="opacity-30" size="36">mdi-account-outline</v-icon>
           </template>
-          <slot name="list-item" :value="value" :index="index">
+          <slot name="list-item" :value="field.value" :index="index">
             <v-list-item-title>{{
-                Object.entries(value).filter(([k, v]) => k !== 'fromDate' && k !== 'toDate').filter(([k, v]) => v).map(([k, v]) => v).join(' ')
+                Object.entries(field.value).filter(([k, v]) => k !== 'fromDate' && k !== 'toDate').filter(([k, v]) => v).map(([k, v]) => v).join(' ')
               }}
             </v-list-item-title>
             <v-list-item-subtitle class="text-high-emphasis">Since:
-              {{ value.fromDate ? new Date(value.fromDate).toLocaleDateString() : '' }}
+              {{ field.value.fromDate ? new Date(field.value.fromDate).toLocaleDateString() : '' }}
             </v-list-item-subtitle>
           </slot>
 
           <template v-slot:append="{ }">
             <v-list-item-action class="flex align-end">
-              <v-icon class="opacity-30 m-2" @click="onClickEditHistoryItem(index)">mdi-pencil</v-icon>
-              <v-icon class="opacity-30 m-2" @click="onClickDeleteHistoryItem(index)">mdi-close</v-icon>
+              <v-icon class="opacity-30 m-2" @click="onClickEditHistoryItem(field.key)">mdi-pencil</v-icon>
+              <v-icon class="opacity-30 m-2" @click="onClickDeleteHistoryItem(field.key)">mdi-close</v-icon>
             </v-list-item-action>
           </template>
 
@@ -68,24 +69,20 @@
 </template>
 
 <script setup>
-
+import {z} from 'zod/v4'
 import {useSchema} from "~/composables/useSchema.js";
+import {toTypedSchema} from "@vee-validate/zod";
 
 const emits = defineEmits(['update:model-value', 'save', 'cancel'])
 const props = defineProps({
   name: String,
   label: String,
-  modelValue: Array,
+  modelValue: {type: Array, default: () => []},
   value: Object,
-  errorMessage: {
-    type: Object,
-    default: () => ({})
-  },
+  errorMessage: String,
   fieldId: String,
   form: Object,
 })
-
-const localHistoryItems = ref(props.modelValue || [])
 
 const showHistoryItemCard = ref(false)
 const editIndex = ref(-1)
@@ -98,8 +95,13 @@ Object.keys(props.form.fields).forEach(key => {
   fieldValues.value[key] = null
 })
 
+const {push, remove, fields} = useFieldArray(props.name)
+props.modelValue.forEach(item => {
+  push(item)
+})
+
 const {meta, errors} = useForm({
-  validationSchema
+  validationSchema: toTypedSchema(validationSchema),
 })
 
 const computedLabel = computed(() => {
@@ -107,31 +109,29 @@ const computedLabel = computed(() => {
 })
 
 const computedErrorMessage = computed(() => {
-
-  if (props.errorMessage[props.name]) {
-    return $t(`errors.${props.errorMessage[props.name]}`, {key: computedLabel.value})
+  if (props.errorMessage) {
+    return $t(`errors.${props.errorMessage}`, {key: computedLabel.value})
   }
   return ''
 })
 
 const onClickEditHistoryItem = (index) => {
-  fieldValues.value = JSON.parse(JSON.stringify(localHistoryItems.value[index]))
+  fieldValues.value = JSON.parse(JSON.stringify(fields.value.find(field => field.key === index).value))
   showHistoryItemCard.value = true
   editIndex.value = index
 }
 const onClickDeleteHistoryItem = (index) => {
   // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-  localHistoryItems.value.splice(index, 1)
+  remove(fields.value.findIndex(f => f.key === index))
 }
 const onClickAddHistoryItem = () => {
   showHistoryItemCard.value = true
-
 }
 const onClickSave = () => {
   if (editIndex.value === -1) {
-    localHistoryItems.value.push(fieldValues.value)
+    push(fieldValues.value)
   } else {
-    localHistoryItems.value[editIndex.value] = fieldValues.value
+    fields.value.find(field => field.key === editIndex.value).value = fieldValues.value
   }
 
   showHistoryItemCard.value = false
@@ -145,8 +145,8 @@ const onClickCancel = () => {
   editIndex.value = -1
 }
 
-watch(localHistoryItems, (localHistoryItems) => {
-  emits('update:model-value', localHistoryItems)
+watch(() => fields, (fields) => {
+  emits('update:model-value', fields.value.map(field => field.value))
 }, {deep: true})
 
 </script>

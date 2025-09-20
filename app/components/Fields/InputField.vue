@@ -64,6 +64,7 @@ const computedLabel = computed(() => {
   return props.label || $t(`components.fields.${props.fieldId}.label`)
 })
 const computedErrorMessage = computed(() => {
+
   if ((meta.touched || meta.dirty) && props.errorMessage[props.name]) {
     return $t(`errors.${props.errorMessage[props.name]}`, {key: computedLabel.value})
   }

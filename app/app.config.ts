@@ -1,4 +1,3 @@
-
 const addressHistory = {
   icon: 'mdi-home-circle',
   schema: 'addressHistory',
@@ -55,27 +54,32 @@ const nameHistory = {
 const applicantDetails = {
   icon: 'mdi-account-circle',
   fields: {
+    email: {
+      props: {disabled: true},
+    },
     title: {
       props: {itemsReference: 'lists.titles'},
       component: 'SelectField',
     },
     firstName: {},
-    middleName: {},
+    hasMiddleName: {
+      component: 'RadioField'
+    },
+    middleName: {
+      props: {
+        reveal: (application: { hasMiddleName: string }) => {
+          return application.hasMiddleName === 'true'
+        }
+      }
+    },
     lastName: {},
     hasNameHistory: {
       component: 'RadioField'
     },
-    nameHistoryDetails: {
-      component: 'FieldSet',
+    previousNames: {
+      component: 'NameHistoryField',
       props: {
-        fields: {
-          nameHistory: {
-            component: 'NameHistoryField',
-            props: {
-              form: nameHistory,
-            }
-          }
-        },
+        form: nameHistory,
         reveal: (application: { hasNameHistory: string }) => {
           return application.hasNameHistory === 'true'
         }
@@ -83,6 +87,7 @@ const applicantDetails = {
     }
   }
 }
+
 const birthDetails = {
   icon: 'mdi-cake-variant',
   fields: {
@@ -113,13 +118,13 @@ const birthDetails = {
       component: 'SelectField',
       props: {type: 'autocomplete', itemsReference: ['lists.commonNationalities', 'lists.nationalities']},
     },
-    motherMaidenName: {},
+    mothersMaidenName: {},
   }
 }
 const addressHistoryDetails = {
   icon: 'mdi-home-circle',
   fields: {
-    addressHistoryList: {
+    addressHistory: {
       component: 'AddressHistoryField',
       props: {
         form: addressHistory,
@@ -169,7 +174,15 @@ const additionalInfoDetails = {
   }
 }
 const confirmationDetails = {
-  icon: 'mdi-check-circle'
+  icon: 'mdi-check-circle',
+  fields: {
+    electronicResults: {
+      component: 'CheckboxField'
+    },
+    declaration: {
+      component: 'CheckboxField'
+    }
+  }
 }
 
 export default defineAppConfig({

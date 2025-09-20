@@ -42,10 +42,11 @@ import NameHistoryField from "~/components/Fields/NameHistoryField.vue";
 import AddressHistoryField from "~/components/Fields/AddressHistoryField.vue";
 import SelectField from "~/components/Fields/SelectField.vue";
 import RadioField from "~/components/Fields/RadioField.vue";
+import CheckboxField from "~/components/Fields/CheckboxField.vue";
 import FieldSet from "~/components/Fields/FieldSet.vue";
 import {useForm} from "vee-validate";
 import {useSchema} from "~/composables/useSchema.js";
-import {toTypedSchema} from "@vee-validate/yup";
+import {toTypedSchema} from "@vee-validate/zod";
 
 const {tm, rt, t} = useI18n()
 
@@ -67,6 +68,7 @@ const componentMap = {
   AddressHistoryField,
   RadioField,
   FieldSet,
+  CheckboxField
 }
 
 const schema = useSchema()
@@ -80,19 +82,20 @@ const emits = defineEmits(['update'])
 const fieldValues = ref({})
 
 Object.keys(props.fields).forEach((key) => {
-  fieldValues.value[key] = props.data[key] || null
+  if (props.data[key]) {
+    fieldValues.value[key] = props.data[key]
+  }
 })
 
 watch(() => props.data, (data) => {
   Object.keys(props.fields).forEach((key) => {
-    fieldValues.value[key] = data[key] || null
+    if (data[key]) {
+      fieldValues.value[key] = data[key]
+    }
   })
 }, {deep: true})
 watch(() => meta, (meta) => {
   emits('update', {values: fieldValues.value, meta: meta.value})
-}, {deep: true})
-watch(() => errors, (errors) => {
-  console.log(errors.value)
 }, {deep: true})
 
 const onUpdate = (data, key) => {

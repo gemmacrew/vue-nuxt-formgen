@@ -1,6 +1,9 @@
 {
   "components": {
     "fields": {
+      "email": {
+        "label": "Email Address"
+      },
       "title": {
         "label": "Title",
         "placeholder": "Select your title"
@@ -8,6 +11,9 @@
       "firstName": {
         "label": "First Name",
         "placeholder": "Enter your first name"
+      },
+      "hasMiddleName": {
+        "label": "Do you have a middle name?"
       },
       "middleName": {
         "label": "Middle Name(s)",
@@ -61,7 +67,7 @@
       "country": {
         "label": "Country"
       },
-      "addressHistoryList": {
+      "addressHistoryDetails": {
         "label": "Address History",
         "sheet": {
           "label": "Enter Address Details"
@@ -79,7 +85,7 @@
       "currentNationality": {
         "label": "Current Nationality"
       },
-      "motherMaidenName": {
+      "mothersMaidenName": {
         "label": "Mother's Maiden Name"
       },
       "gender": {
@@ -102,6 +108,12 @@
       },
       "dbsProfileNumber": {
         "label": "DBS Profile Number (if known)"
+      },
+      "electronicResults": {
+        "label": "I consent to the DBS providing an electronic result directly to the registered body that has submitted my application."
+      },
+      "declaration": {
+        "label": "Please check this box to confirm that you have read, understood and agree to the terms and conditions, in addition to the FAQ page"
       }
     }
   },
@@ -173,10 +185,18 @@
       ]
     },
     "additionalInfoDetails": {
-      "title": "Additional Information"
+      "title": "Additional Information",
+      "notes": [
+        "The more information you provide, the faster the results may be available",
+        "If you provide details of a document here, you MUST email us proof of that document or the details WILL BE EXCLUDED and might delay your application"
+      ]
     },
     "confirmationDetails": {
-      "title": "Confirmation"
+      "title": "Confirmation",
+      "notes": [
+        "By consenting to this application, you acknowledge that an electronic result contains a message that indicates either the certificate is blank or to await certificate which will indicate that my certificate contains information.",
+        "In some cases the registered body may provide this information directly to my employer prior to me receiving my certificate. I understand if I do not consent to an electronic result being issued to the registered body submitting my application that I must not proceed with this application and I should submit a paper application form. I understand that to withdraw my consent whilst my application is in progress I must contact the DBS helpline 03000 200 190. My application will then be withdrawn."
+      ]
     },
     "nameHistory": {
       "title": "Name History"
@@ -184,8 +204,12 @@
   },
   "errors": {
     "isRequired": "{ key } is required",
-    "noFutureDate": "You cannot choose a future date",
-    "atLeastOne": "{ key } must have at least one record"
+    "dateBeforeToday": "Date must be before Today",
+    "atLeastOne": "{ key } must have at least one record",
+    "toDateAfterFromDate": "To Date must be after From Date",
+    "acknowledge": "Please acknowledge",
+    "selectOption": "Please select an option",
+    "incompleteAddressHistory": "Please enter at least 5 years address history"
   },
   "lists": {
     "genders": [

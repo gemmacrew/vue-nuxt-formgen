@@ -1,11 +1,11 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "07e6c54f-1ce0-4f9b-9b51-fa692736d97d",
+  "id": "8d4df276-17a7-4373-acf9-fedcdbaf7395",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
-    "applicationAddresses": {
-      "name": "applicationAddresses",
+    "applicationAddressHistory": {
+      "name": "applicationAddressHistory",
       "columns": {
         "id": {
           "name": "id",
@@ -14,46 +14,46 @@
           "notNull": true,
           "autoincrement": true
         },
-        "applicantId": {
-          "name": "applicantId",
+        "applicationId": {
+          "name": "applicationId",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
-        "firstLine": {
-          "name": "firstLine",
+        "streetNumber": {
+          "name": "streetNumber",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
-        "secondLine": {
-          "name": "secondLine",
+        "route": {
+          "name": "route",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
-        "town": {
-          "name": "town",
+        "locality": {
+          "name": "locality",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
-        "county": {
-          "name": "county",
+        "postalTown": {
+          "name": "postalTown",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
-        "postCode": {
-          "name": "postCode",
+        "administrativeAreaLevel2": {
+          "name": "administrativeAreaLevel2",
           "type": "text",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false
         },
         "country": {
@@ -63,11 +63,11 @@
           "notNull": true,
           "autoincrement": false
         },
-        "isCurrentAddress": {
-          "name": "isCurrentAddress",
-          "type": "integer",
+        "postCode": {
+          "name": "postCode",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "fromDate": {
@@ -94,12 +94,113 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "applicationAddresses_applicantId_applications_id_fk": {
-          "name": "applicationAddresses_applicantId_applications_id_fk",
-          "tableFrom": "applicationAddresses",
+        "applicationAddressHistory_applicationId_applications_id_fk": {
+          "name": "applicationAddressHistory_applicationId_applications_id_fk",
+          "tableFrom": "applicationAddressHistory",
           "tableTo": "applications",
           "columnsFrom": [
-            "applicantId"
+            "applicationId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "applicationNameHistory": {
+      "name": "applicationNameHistory",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "applicationId": {
+          "name": "applicationId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "firstName": {
+          "name": "firstName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "hasMiddleName": {
+          "name": "hasMiddleName",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "middleName": {
+          "name": "middleName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "lastName": {
+          "name": "lastName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "fromDate": {
+          "name": "fromDate",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "toDate": {
+          "name": "toDate",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "applicationNameHistory_applicationId_applications_id_fk": {
+          "name": "applicationNameHistory_applicationId_applications_id_fk",
+          "tableFrom": "applicationNameHistory",
+          "tableTo": "applications",
+          "columnsFrom": [
+            "applicationId"
           ],
           "columnsTo": [
             "id"
@@ -126,26 +227,33 @@
           "name": "type",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false
         },
         "email": {
           "name": "email",
           "type": "text",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false
         },
         "title": {
           "name": "title",
           "type": "text",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false
         },
         "firstName": {
           "name": "firstName",
           "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "hasMiddleName": {
+          "name": "hasMiddleName",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -164,11 +272,116 @@
           "notNull": false,
           "autoincrement": false
         },
-        "dateOfBirth": {
-          "name": "dateOfBirth",
+        "hasNameHistory": {
+          "name": "hasNameHistory",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "gender": {
+          "name": "gender",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dob": {
+          "name": "dob",
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false
+        },
+        "townOfBirth": {
+          "name": "townOfBirth",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "countryOfBirth": {
+          "name": "countryOfBirth",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "nationalityAtBirth": {
+          "name": "nationalityAtBirth",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "currentNationality": {
+          "name": "currentNationality",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "mothersMaidenName": {
+          "name": "mothersMaidenName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "hasPassport": {
+          "name": "hasPassport",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "passportNumber": {
+          "name": "passportNumber",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "passportCountryOfIssue": {
+          "name": "passportCountryOfIssue",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "hasDrivingLicence": {
+          "name": "hasDrivingLicence",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "drivingLicenceNumber": {
+          "name": "drivingLicenceNumber",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dbsProfileNumber": {
+          "name": "dbsProfileNumber",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "electronicResults": {
+          "name": "electronicResults",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "declaration": {
+          "name": "declaration",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
           "autoincrement": false
         },
         "createdAt": {
@@ -209,6 +422,13 @@
           "notNull": true,
           "autoincrement": false
         },
+        "stripCustomerId": {
+          "name": "stripCustomerId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "createdAt": {
           "name": "createdAt",
           "type": "integer",
@@ -229,6 +449,13 @@
           "name": "users_email_unique",
           "columns": [
             "email"
+          ],
+          "isUnique": true
+        },
+        "users_stripCustomerId_unique": {
+          "name": "users_stripCustomerId_unique",
+          "columns": [
+            "stripCustomerId"
           ],
           "isUnique": true
         }

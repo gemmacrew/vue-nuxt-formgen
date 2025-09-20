@@ -2,7 +2,6 @@
   <reveal-container :reveal="props?.reveal || true">
     <component
       v-for="([key, field]) in Object.entries(props.fields)" :key="key"
-      v-bind="{ ...$attrs, ...field.props }"
       :is="componentMap[field.component] || InputField"
       :name="`${key}`"
       class="mb-3 mt-3"
@@ -33,8 +32,12 @@ const props = defineProps({
   fields: {},
   modelValue: {},
   reveal: [Boolean, Function],
-  errorMessage: {},
+  errorMessage: {
+    type: Object,
+    default: () => ({})
+  },
 })
+
 
 const fieldValues = ref({})
 Object.keys(props.fields).forEach((key) => {
@@ -43,10 +46,6 @@ Object.keys(props.fields).forEach((key) => {
 const onUpdate = (data, key) => {
   fieldValues.value[key] = data
 }
-
-watch(() => props.errorMessage, (errorMessage) => {
-  console.log(errorMessage)
-}, {deep: true})
 watch(() => fieldValues, (fieldValues) => {
   emits('update:model-value', fieldValues.value)
 }, {deep: true})
