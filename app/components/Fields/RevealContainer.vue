@@ -1,11 +1,24 @@
 <template>
 
-  <div ref="outerContainer" :style="outerStyle" class="relative overflow-hidden transition-all duration-250 reveal-container">
-    <div ref="innerContainer" @resize="onResize" :style="innerStyle"
-         class="relative overflow-hidden transition-all duration-250">
-      <slot />
+  <template v-if="isDynamic">
+    <div ref="outerContainer" :style="outerStyle"
+         class="relative overflow-hidden transition-all duration-500 reveal-container">
+      <div ref="innerContainer" @resize="onResize" :style="innerStyle"
+           class="relative overflow-hidden transition-all duration-500">
+        <slot/>
+      </div>
     </div>
-  </div>
+  </template>
+  <template v-else>
+    <div ref="outerContainer"
+         class="relative overflow-hidden transition-all duration-250 reveal-container">
+      <div ref="innerContainer" @resize="onResize"
+           class="relative overflow-hidden transition-all duration-250">
+        <slot/>
+      </div>
+    </div>
+
+  </template>
 
 </template>
 
@@ -23,12 +36,13 @@ const props = defineProps({
 const innerContainer = ref()
 const outerHeight = ref(0)
 const application = useStorage('dbs-application', {})
-const computedReveal = ref(typeof props.reveal == 'function' ? props.reveal(application.value) : props.reveal)
+const isDynamic = computed(() => typeof props.reveal === 'function')
+const computedReveal = ref(isDynamic.value ? props.reveal(application.value) : props.reveal)
 
 if (typeof props.reveal === 'function') {
   watch(() => application.value, (application) => {
     computedReveal.value = props.reveal(application)
-  }, { deep: true})
+  }, {deep: true})
 }
 
 const outerStyle = computed(() => {

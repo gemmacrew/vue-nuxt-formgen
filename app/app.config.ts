@@ -138,19 +138,18 @@ const additionalInfoDetails = {
     hasPassport: {
       component: 'RadioField'
     },
-    passportDetails: {
-      component: 'FieldSet',
+    passportNumber: {
       props: {
-        fields: {
-          passportNumber: {},
-          passportCountryOfIssue: {
-            component: 'SelectField',
-            props: {
-              itemsReference: ['lists.commonCountries', 'lists.countries'],
-              type: 'autocomplete'
-            }
-          },
-        },
+        reveal: (application: { hasPassport: string }) => {
+          return application.hasPassport === 'true'
+        }
+      }
+    },
+    passportCountryOfIssue: {
+      component: 'SelectField',
+      props: {
+        itemsReference: ['lists.commonCountries', 'lists.countries'],
+        type: 'autocomplete',
         reveal: (application: { hasPassport: string }) => {
           return application.hasPassport === 'true'
         }

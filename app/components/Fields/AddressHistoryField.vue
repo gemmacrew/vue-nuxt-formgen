@@ -15,6 +15,8 @@
         :search="search"
         :custom-filter="() => true"
         hide-no-data
+        class="mt-2"
+        hide-details="auto"
         autocomplete="off"
         @update:search="search = $event"
         @update:model-value="onUpdateValue($event, fieldValues)"
@@ -26,7 +28,8 @@
         v-for="([key, field], index) in Object.entries(form.fields)" :key="key"
         :is="componentMap[field.component] || InputField"
         :name="`${key}`"
-        class="mb-2"
+        class="mt-2"
+        hide-details="auto"
         clearable
         :field-id="`${key}`"
         v-model="fieldValues[key]"

@@ -1,5 +1,5 @@
 <template>
-  <div class="input-field">
+  <reveal-container :reveal="props?.reveal || true" class="input-field">
     <v-date-input
       v-if="props.type === 'date'"
       :label="computedLabel"
@@ -34,12 +34,13 @@
       :class="{ dirty: meta.dirty, valid: meta.valid, invalid: !meta.valid, touched: meta.touched }"
       :error-messages="computedErrorMessage"
     />
-  </div>
+  </reveal-container>
 
 </template>
 
 <script setup>
 import {useField} from 'vee-validate';
+import RevealContainer from "~/components/Fields/RevealContainer.vue";
 
 const props = defineProps({
   name: String,
@@ -47,6 +48,7 @@ const props = defineProps({
   label: String,
   modelValue: [String, Date],
   fieldId: String,
+  reveal: [Boolean, Function],
   errorMessage: {
     type: Object,
     default: () => ({})

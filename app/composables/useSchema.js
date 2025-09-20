@@ -68,7 +68,7 @@ export const useSchema = () => {
 	const additionalInfoDetails = z.object({
 		hasPassport: z.string('selectOption'),
 		passportNumber: z.string().optional(),
-		passportCountryOfIssue: z.string().optional(),
+		passportCountryOfIssue: z.string().nullish().optional(),
 		hasDrivingLicence: z.string('selectOption'),
 		drivingLicenceNumber: z.string().optional(),
 		dbsProfileNumber: z.string().nullish().optional()

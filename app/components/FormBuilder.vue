@@ -13,7 +13,7 @@
               v-bind="field.props"
               :error-message="errors"
               clearable
-              class="mb-3 mt-3"
+              class="mt-2"
               @update:model-value="onUpdate($event, key)"/>
           </template>
         </v-form>

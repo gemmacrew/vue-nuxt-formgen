@@ -1,6 +1,6 @@
 <template>
 
-  <div class="select-field">
+  <reveal-container :reveal="props?.reveal || true" class="select-field">
     <v-autocomplete
       v-if="type ==='autocomplete'"
       v-bind="$attrs"
@@ -16,7 +16,7 @@
       :class="{ required: meta.required, dirty: meta.dirty, valid: meta.valid, invalid: !meta.valid, touched: meta.touched }"
     >
       <template #selection="{ item }">
-        {{ item ? item.raw.name : ''}}
+        {{ item ? item.raw.name : '' }}
       </template>
     </v-autocomplete>
     <v-select
@@ -33,13 +33,13 @@
       :error-messages="computedErrorMessage"
       :class="{ required: meta.required, dirty: meta.dirty, valid: meta.valid, invalid: !meta.valid, touched: meta.touched }"
     />
-  </div>
+  </reveal-container>
 
 </template>
 
 <script setup>
 import {useField} from 'vee-validate';
-
+import RevealContainer from "~/components/Fields/RevealContainer.vue";
 
 const props = defineProps({
   name: String,
@@ -48,6 +48,7 @@ const props = defineProps({
   modelValue: String,
   itemsReference: [String, Array],
   fieldId: String,
+  reveal: [Boolean, Function],
   errorMessage: {
     type: Object,
     default: () => ({})
