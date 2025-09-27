@@ -1,0 +1,1 @@
+ALTER TABLE `applicationAddressHistory` RENAME COLUMN "postCode" TO "postalCode";

@@ -1,11 +1,12 @@
 import {sqliteTable} from 'drizzle-orm/sqlite-core'
 
 export const users = sqliteTable('users', t => ({
-    email: t.text().notNull().unique(),
+    id: t.integer().primaryKey({autoIncrement: true}),
+    email: t.text().notNull(),
     passwordHash: t.text().notNull(),
-    stripCustomerId: t.text().unique(),
-    createdAt: t.integer({mode: 'timestamp_ms'}).$defaultFn(() => new Date()).notNull(),
-    updatedAt: t.integer({mode: 'timestamp_ms'}).$defaultFn(() => new Date()).$onUpdate(() => new Date()),
+    stripeCustomerId: t.text().unique(),
+    createdDate: t.integer({mode: 'timestamp_ms'}).$defaultFn(() => new Date()).notNull(),
+    updatedDate: t.integer({mode: 'timestamp_ms'}).$defaultFn(() => new Date()).$onUpdate(() => new Date()),
   }),
 )
 
@@ -40,23 +41,26 @@ export const applications = sqliteTable('applications', t => (
     electronicResults: t.integer({mode: 'boolean'}),
     declaration: t.integer({mode: 'boolean'}),
 
-    createdAt: t.integer({mode: 'timestamp_ms'}).$defaultFn(() => new Date()).notNull(),
-    updatedAt: t.integer({mode: 'timestamp_ms'}).$defaultFn(() => new Date()).$onUpdate(() => new Date()),
+    paymentStatus: t.text({ enum: ['pending', 'paid', 'cancelled', 'failed', 'refunded', 'unpaid', 'unknown']}),
+    checkoutSessionId: t.text(),
+
+    createdDate: t.integer({mode: 'timestamp_ms'}).$defaultFn(() => new Date()).notNull(),
+    updatedDate: t.integer({mode: 'timestamp_ms'}).$defaultFn(() => new Date()).$onUpdate(() => new Date()),
   }
 ))
+
 
 export const applicationNameHistory = sqliteTable('applicationNameHistory', t => ({
     id: t.integer().primaryKey({autoIncrement: true}),
     applicationId: t.integer().references(() => applications.id),// person the application is for
     title: t.text(),
     firstName: t.text(),
-    hasMiddleName: t.integer({mode: 'boolean'}),
     middleName: t.text(),
     lastName: t.text(),
     fromDate: t.integer({mode: 'timestamp_ms'}).$defaultFn(() => new Date()).notNull(),
     toDate: t.integer({mode: 'timestamp_ms'}).$defaultFn(() => new Date()).notNull(),
-    createdAt: t.integer({mode: 'timestamp_ms'}).$defaultFn(() => new Date()).notNull(),
-    updatedAt: t.integer({mode: 'timestamp_ms'}).$defaultFn(() => new Date()).$onUpdate(() => new Date()),
+    createdDate: t.integer({mode: 'timestamp_ms'}).$defaultFn(() => new Date()).notNull(),
+    updatedDate: t.integer({mode: 'timestamp_ms'}).$defaultFn(() => new Date()).$onUpdate(() => new Date()),
   }),
 )
 
@@ -69,9 +73,9 @@ export const applicationAddressHistory = sqliteTable('applicationAddressHistory'
     postalTown: t.text(),
     administrativeAreaLevel2: t.text(),
     country: t.text().notNull(),
-    postCode: t.text().notNull(),
+    postalCode: t.text().notNull(),
     fromDate: t.integer({mode: 'timestamp_ms'}).$defaultFn(() => new Date()).notNull(),
-    createdAt: t.integer({mode: 'timestamp_ms'}).$defaultFn(() => new Date()).notNull(),
-    updatedAt: t.integer({mode: 'timestamp_ms'}).$defaultFn(() => new Date()).$onUpdate(() => new Date()),
+    createdDate: t.integer({mode: 'timestamp_ms'}).$defaultFn(() => new Date()).notNull(),
+    updatedDate: t.integer({mode: 'timestamp_ms'}).$defaultFn(() => new Date()).$onUpdate(() => new Date()),
   }),
 )

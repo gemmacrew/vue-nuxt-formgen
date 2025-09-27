@@ -1,8 +1,8 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "57d8721d-7663-4b6b-9264-c8e6d48160ca",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "95823e81-11a6-4a12-b995-bb88867015d3",
+  "prevId": "57d8721d-7663-4b6b-9264-c8e6d48160ca",
   "tables": {
     "applicationAddressHistory": {
       "name": "applicationAddressHistory",
@@ -422,8 +422,8 @@
           "notNull": true,
           "autoincrement": false
         },
-        "stripCustomerId": {
-          "name": "stripCustomerId",
+        "stripeCustomerId": {
+          "name": "stripeCustomerId",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
@@ -445,10 +445,10 @@
         }
       },
       "indexes": {
-        "users_stripCustomerId_unique": {
-          "name": "users_stripCustomerId_unique",
+        "users_stripeCustomerId_unique": {
+          "name": "users_stripeCustomerId_unique",
           "columns": [
-            "stripCustomerId"
+            "stripeCustomerId"
           ],
           "isUnique": true
         }
@@ -464,7 +464,9 @@
   "_meta": {
     "schemas": {},
     "tables": {},
-    "columns": {}
+    "columns": {
+      "\"users\".\"stripCustomerId\"": "\"users\".\"stripeCustomerId\""
+    }
   },
   "internal": {
     "indexes": {}

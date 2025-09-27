@@ -1,34 +1,46 @@
 <template>
-  <div class="radio-field">
+  <reveal-container :reveal="props?.reveal || true" class="radio-field">
     <v-radio-group
       v-model="value"
       color="secondary"
       :name="name"
       inline
+      hide-details="auto"
       v-bind="$attrs"
       @blur="onBlur"
       :label="computedLabel"
       :error-messages="computedErrorMessage">
-      <v-radio @blur="onBlur" :name="name" label="Yes" value="true"/>
-      <v-radio @blur="onBlur" :name="name" label="No" value="false"/>
+      <v-radio v-for="option in options" @blur="onBlur" :name="name" :label="$t(`constants.${option.label}`)" :value="option.value" :key="option.value"/>
     </v-radio-group>
-  </div>
+  </reveal-container>
 
 </template>
 
 <script setup>
 import {useField} from "vee-validate";
+import RevealContainer from "~/components/Fields/RevealContainer.vue";
 
 const props = defineProps({
   name: String,
   type: String,
   label: String,
-  modelValue: [String, Date],
+  modelValue: [Boolean, String],
+  options: {
+    type: Array,
+    default: () => [{
+      label: 'yes',
+      value: true
+    }, {
+      label: 'no',
+      value: false
+    }]
+  },
   errorMessage: {
     type: Object,
     default: () => ({})
   },
   fieldId: String,
+  reveal: [Boolean, Function],
 });
 
 const {value, meta, handleBlur} = useField(() => props.name, undefined, {

@@ -1,6 +1,55 @@
 {
+  "constants": {
+    "yes": "Yes",
+    "no": "No",
+    "paper": "Paper",
+    "card": "Card",
+    "fromDate": "From",
+    "toDate": "To",
+    "payNow": "Pay Now",
+    "next": "Next",
+    "previous": "Previous",
+    "saveForLater": "Save for later",
+    "applicationNumber": "Application No",
+    "transactionDate": "Transaction Date",
+    "amountPaid": "Amount Paid",
+    "customerEmail": "Customer"
+  },
   "components": {
+    "header": {
+      "title": "DBS Checks Online"
+    },
     "fields": {
+      "contractualAgreement": {
+        "label": "I confirm that I agree to the contract details as set out here"
+      },
+      "eligibilityGuidelines": {
+        "label": "I confirm that I have read the policy and that I am eligible to access the DBS service"
+      },
+      "dbsGuidelines": {
+        "label": "I confirm that I have read and understood the DBS Guidelines"
+      },
+      "dbsCodeOfConduct": {
+        "label": "I confirm that I have read and understood the DBS Code Of Practice"
+      },
+      "dbsIdentityCheckingGuidelines": {
+        "label": "\nI confirm that I have read and understood the DBS Identity Checking Guidelines"
+      },
+      "organisationAddress": {
+        "label": "Organisation Address",
+        "sheet": {
+          "label": "Enter Address Details"
+        }
+      },
+      "passportDob": {
+        "label": "Passport Date of Birth"
+      },
+      "passportNationality": {
+        "label": "Passport Nationality"
+      },
+      "passportIssueDate": {
+        "label": "Passport Issue Date"
+      },
       "email": {
         "label": "Email Address"
       },
@@ -26,10 +75,10 @@
       "hasNameHistory": {
         "label": "Have you been known by any other name(s)?"
       },
-      "nameHistory": {
+      "previousNameHistory": {
         "label": "Previous Name History",
         "sheet": {
-          "label": "Enter Name History"
+          "label": "Enter Name Details"
         }
       },
       "dob": {
@@ -67,8 +116,8 @@
       "country": {
         "label": "Country"
       },
-      "addressHistoryDetails": {
-        "label": "Address History",
+      "addressHistory": {
+        "label": "Address Details",
         "sheet": {
           "label": "Enter Address Details"
         }
@@ -98,13 +147,25 @@
         "label": "Has Driving Licence"
       },
       "passportNumber": {
-        "label":"Passport Number"
+        "label": "Passport Number"
       },
       "passportCountryOfIssue": {
         "label": "Country of Issue"
       },
       "drivingLicenceNumber": {
         "label": "Driving Licence Number"
+      },
+      "drivingLicenceDob": {
+        "label": "Date of Birth on Driving Licence"
+      },
+      "drivingLicenceValidFromDate": {
+        "label": "Driving Licence Valid From Date"
+      },
+      "drivingLicenceType": {
+        "label": "Driving Licence Type"
+      },
+      "drivingLicenceCountryOfIssue": {
+        "label": "Driving Licence Country of Issue"
       },
       "dbsProfileNumber": {
         "label": "DBS Profile Number (if known)"
@@ -114,10 +175,20 @@
       },
       "declaration": {
         "label": "Please check this box to confirm that you have read, understood and agree to the terms and conditions, in addition to the FAQ page"
+      },
+      "positionAppliedFor": {
+        "label": "Position Applied For"
+      },
+      "jobDescription": {
+        "label": "Job Description"
       }
     }
   },
   "pages": {
+    "success": {
+      "title": "Payment Successful",
+      "subtitle": "Your payment has been successful. You will receive an email with your DBS Check details shortly"
+    },
     "auth": {
       "login": {
         "title": "Login",
@@ -149,7 +220,7 @@
         "loginLink": "Already registered? Log in here"
       }
     },
-    "apply": {
+    "application": {
       "title": "Apply For a Basic DBS Check",
       "subtitle": "Complete the application form below to apply for your Basic DBS check from the official Government provider and Registered Body",
       "notes": [
@@ -160,6 +231,17 @@
     }
   },
   "forms": {
+    "positionDetails": {
+      "title": "Position Details"
+    },
+    "organisationDetails": {
+      "title": "Organisation Details",
+      "notes": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit",
+        "magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam"
+      ]
+    },
     "applicantDetails": {
       "title": "Applicant Details",
       "notes": [
@@ -175,7 +257,7 @@
         "magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam"
       ]
     },
-    "addressHistoryDetails": {
+    "addressHistory": {
       "title": "Address History",
       "notes": [
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
@@ -184,8 +266,15 @@
         "spiciatis unde omnis iste natus error sit d minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam"
       ]
     },
+    "basicAdditionalInfoDetails": {
+      "title": "Document Information",
+      "notes": [
+        "The more information you provide, the faster the results may be available",
+        "If you provide details of a document here, you MUST email us proof of that document or the details WILL BE EXCLUDED and might delay your application"
+      ]
+    },
     "additionalInfoDetails": {
-      "title": "Additional Information",
+      "title": "Document Information",
       "notes": [
         "The more information you provide, the faster the results may be available",
         "If you provide details of a document here, you MUST email us proof of that document or the details WILL BE EXCLUDED and might delay your application"
@@ -204,14 +293,185 @@
   },
   "errors": {
     "isRequired": "{ key } is required",
-    "dateBeforeToday": "Date must be before Today",
+    "dateBeforeToday": "{ key } must be before Today",
     "atLeastOne": "{ key } must have at least one record",
-    "toDateAfterFromDate": "To Date must be after From Date",
+    "onlyOne": "Please enter one and only one item",
+    "toDateAfterFromDate": "{ key } must be after From Date",
     "acknowledge": "Please acknowledge",
     "selectOption": "Please select an option",
     "incompleteAddressHistory": "Please enter at least 5 years address history"
   },
   "lists": {
+    "positions": [
+      {
+        "code": "ACCOUNTANT",
+        "name": "ACCOUNTANT"
+      },
+      {
+        "code": "BAILIFF",
+        "name": "BAILIFF"
+      },
+      {
+        "code": "BIOMEDICAL SCIENTIST",
+        "name": "BIOMEDICAL SCIENTIST"
+      },
+      {
+        "code": "CHIEF TECHNOLOGIES OFFICER",
+        "name": "CHIEF TECHNOLOGIES OFFICER"
+      },
+      {
+        "code": "CIVIL ENFORCEMENT OFFICERS",
+        "name": "CIVIL ENFORCEMENT OFFICERS"
+      },
+      {
+        "code": "CLEANER - MEDICAL PRACTICE",
+        "name": "CLEANER - MEDICAL PRACTICE"
+      },
+      {
+        "code": "COMPLIANCE OFFICER - CARE SERVICES",
+        "name": "COMPLIANCE OFFICER - CARE SERVICES"
+      },
+      {
+        "code": "CONSULTANT BIOMEDICAL SCIENTIST",
+        "name": "CONSULTANT BIOMEDICAL SCIENTIST"
+      },
+      {
+        "code": "CONTRACTOR - PROBATION SERVICE",
+        "name": "CONTRACTOR - PROBATION SERVICE"
+      },
+      {
+        "code": "CYTOLOGY SCREENER",
+        "name": "CYTOLOGY SCREENER"
+      },
+      {
+        "code": "DELIVERY DRIVER - HEALTHCARE",
+        "name": "DELIVERY DRIVER - HEALTHCARE"
+      },
+      {
+        "code": "DIRECTOR - HEALTH SERVICES",
+        "name": "DIRECTOR - HEALTH SERVICES"
+      },
+      {
+        "code": "DIRECTOR OF FINANCE",
+        "name": "DIRECTOR OF FINANCE"
+      },
+      {
+        "code": "DISPENSER",
+        "name": "DISPENSER"
+      },
+      {
+        "code": "FCA REGULATED ROLE",
+        "name": "FCA REGULATED ROLE"
+      },
+      {
+        "code": "FOSTER CARE - MANAGEMENT",
+        "name": "FOSTER CARE - MANAGEMENT"
+      },
+      {
+        "code": "FOSTERING ADMINISTRATOR",
+        "name": "FOSTERING ADMINISTRATOR"
+      },
+      {
+        "code": "FOSTERING DECISION MAKER",
+        "name": "FOSTERING DECISION MAKER"
+      },
+      {
+        "code": "GOVERN",
+        "name": "GOVERN"
+      },
+      {
+        "code": "HEALTHCARE - SUPPORT STAFF",
+        "name": "HEALTHCARE - SUPPORT STAFF"
+      },
+      {
+        "code": "HEALTHCARE ADMINISTRATOR",
+        "name": "HEALTHCARE ADMINISTRATOR"
+      },
+      {
+        "code": "HEALTHCARE ADMINISTRATOR (STD)",
+        "name": "HEALTHCARE ADMINISTRATOR (STD)"
+      },
+      {
+        "code": "HEALTHCARE RECEPTION",
+        "name": "HEALTHCARE RECEPTION"
+      },
+      {
+        "code": "HOSPITAL PORTER (STD)",
+        "name": "HOSPITAL PORTER (STD)"
+      },
+      {
+        "code": "INTERPRETER",
+        "name": "INTERPRETER"
+      },
+      {
+        "code": "LOCKSMITH",
+        "name": "LOCKSMITH"
+      },
+      {
+        "code": "MEDICAL LAB ASSISTANT",
+        "name": "MEDICAL LAB ASSISTANT"
+      },
+      {
+        "code": "MORTUARY TECHNICIAN",
+        "name": "MORTUARY TECHNICIAN"
+      },
+      {
+        "code": "NHS CONTRACTOR",
+        "name": "NHS CONTRACTOR"
+      },
+      {
+        "code": "NHS CONTRACTOR - VA",
+        "name": "NHS CONTRACTOR - VA"
+      },
+      {
+        "code": "NHS/CARE CONTRACTOR - VA (STD)",
+        "name": "NHS/CARE CONTRACTOR - VA (STD)"
+      },
+      {
+        "code": "PHARMACY ASSISTANT",
+        "name": "PHARMACY ASSISTANT"
+      },
+      {
+        "code": "PRISON CONTRACTOR",
+        "name": "PRISON CONTRACTOR"
+      },
+      {
+        "code": "REGISTERED FOREIGN LAWYER",
+        "name": "REGISTERED FOREIGN LAWYER"
+      },
+      {
+        "code": "REGISTERED LEGAL EXECUTIVE",
+        "name": "REGISTERED LEGAL EXECUTIVE"
+      },
+      {
+        "code": "REGISTERED SOLICITOR",
+        "name": "REGISTERED SOLICITOR"
+      },
+      {
+        "code": "SCXJ",
+        "name": "SCXJ"
+      },
+      {
+        "code": "SECURITY INDUSTRY AUTHORITY LICENSE",
+        "name": "SECURITY INDUSTRY AUTHORITY LICENSE"
+      },
+      {
+        "code": "SECURITY OFFICER",
+        "name": "SECURITY OFFICER"
+      },
+      {
+        "code": "STERILE SERVICES TECHNICIAN",
+        "name": "STERILE SERVICES TECHNICIAN"
+      },
+      {
+        "code": "SUPPORT STAFF - FOSTERING",
+        "name": "SUPPORT STAFF - FOSTERING"
+      },
+      {
+        "code": "VETERINARY SURGEON",
+        "name": "VETERINARY SURGEON"
+      }
+    ],
     "genders": [
       {
         "code": "male",

@@ -1,148 +1,235 @@
 {
-  "$vuetify": {
-    "stepper": {
-      "next": "nesaf",
-      "prev": "blaenorol"
-    },
-    "open": "Open",
-    "close": "Close"
+  "constants": {
+    "yes": "Oes",
+    "no": "Nac oes",
+    "fromDate": "O'r dyddiad",
+    "toDate": "Hyd yma"
   },
   "components": {
     "fields": {
+      "email": {
+        "label": "Cyfeiriad Ebost"
+      },
       "title": {
-        "label": "Title",
+        "label": "Teitl",
         "placeholder": "Select your title"
       },
       "firstName": {
         "label": "Enw Cyntaf",
         "placeholder": "Enter your first name"
       },
+      "hasMiddleName": {
+        "label": "Oes gennych chi enw canol?"
+      },
       "middleName": {
-        "label": "Middle Name(s)",
-        "placeholder": "Enter your middle name"
+        "label": "Enw(au) Canol",
+        "placeholder": "Rhowch eich enw canol"
       },
       "lastName": {
-        "label": "Last Name",
-        "placeholder": "Enter your last name"
+        "label": "Enw olaf",
+        "placeholder": "Rhowch eich enw olaf"
+      },
+      "hasNameHistory": {
+        "label": "Ydych chi wedi cael eich adnabod wrth unrhyw enw(au) arall??"
+      },
+      "previousNameHistory": {
+        "label": "Hanes Enw Blaenorol",
+        "sheet": {
+          "label": "Rhowch Hanes Enw"
+        }
       },
       "dob": {
-        "label": "Date of Birth",
-        "placeholder": "Enter your date of birth"
+        "label": "Dyddiad Geni",
+        "placeholder": "Rhowch eich dyddiad geni"
       },
-      "sinceDate": {
-        "label": "Since Date"
+      "fromDate": {
+        "label": "O Dyddiad"
       },
-      "address": {
-        "search": {
-          "label": "Address",
-          "placeholder": "Start typing to search for your address..."
-        },
-        "postal_code": {
-          "label": "Post Code"
-        },
-        "street_number": {
-          "label": "Street Number/House Name"
-        },
-        "route": {
-          "label": "Street Name"
-        },
-        "locality": {
-          "label": "Town"
-        },
-        "postal_town": {
-          "label": "City"
-        },
-        "administrative_area_level_2": {
-          "label": "County"
-        },
-        "country": {
-          "label": "Country"
+      "toDate": {
+        "label": "Hyd Yma"
+      },
+      "searchAddress": {
+        "label": "Cyfeiriad",
+        "placeholder": "Dechreuwch deipio i chwilio am eich cyfeiriad..."
+      },
+      "postalCode": {
+        "label": "Côd Post"
+      },
+      "streetNumber": {
+        "label": "Rhif Stryd/Enw Tŷ"
+      },
+      "route": {
+        "label": "Enw Stryd"
+      },
+      "locality": {
+        "label": "Tref"
+      },
+      "postalTown": {
+        "label": "Dinas"
+      },
+      "administrativeAreaLevel2": {
+        "label": "Sir"
+      },
+      "country": {
+        "label": "Gwlad"
+      },
+      "addressHistory": {
+        "label": "Hanes Cyfeiriad",
+        "sheet": {
+          "label": "Rhowch Manylion Cyfeiriad"
         }
+      },
+      "townOfBirth": {
+        "label": "Tref Genedigaeth"
+      },
+      "countryOfBirth": {
+        "label": "Gwlad Genedigaeth"
+      },
+      "nationalityAtBirth": {
+        "label": "Cenedligrwydd adeg Geni"
+      },
+      "currentNationality": {
+        "label": "Cenedligrwydd Presennol"
+      },
+      "mothersMaidenName": {
+        "label": "Enw Morwyn Mam"
+      },
+      "gender": {
+        "label": "Rhyw"
+      },
+      "hasPassport": {
+        "label": "Mae ganddo basbort"
+      },
+      "hasDrivingLicence": {
+        "label": "Mae ganddo Drwydded Yrru"
+      },
+      "passportNumber": {
+        "label":"Rhif Pasbort"
+      },
+      "passportCountryOfIssue": {
+        "label": "Gwlad Argraffu"
+      },
+      "drivingLicenceNumber": {
+        "label": "Rhif Trwydded Yrru"
+      },
+      "dbsProfileNumber": {
+        "label": "Rhif Proffil y Gwasanaeth Datgelu a Gwahardd (os yw'n hysbys)"
+      },
+      "electronicResults": {
+        "label": "Rwy'n cydsynio i'r DBS ddarparu canlyniad electronig yn uniongyrchol i'r corff cofrestredig sydd wedi cyflwyno fy nghais."
+      },
+      "declaration": {
+        "label": "Ticiwch y blwch hwn i gadarnhau eich bod wedi darllen, deall a chytuno â'r telerau ac amodau, yn ogystal â'r dudalen Cwestiynau Cyffredin"
       }
     }
   },
   "pages": {
     "auth": {
       "login": {
-        "title": "Login",
-        "subtitle": "Enter your credentials to login"
+        "title": "Mewngofnodi",
+        "subtitle": "Rhowch eich manylion mewngofnodi"
       },
       "register": {
-        "title": "Register",
-        "subtitle": "Enter your credentials to register"
+        "title": "Cofrestrwch",
+        "subtitle": "Rhowch eich manylion mewngofnodi i gofrestru"
       },
       "fields": {
         "email": {
-          "label": "Email",
-          "placeholder": "Enter your email"
+          "label": "Ebost",
+          "placeholder": "Rhowch eich e-bost"
         },
         "password": {
-          "label": "Password",
-          "placeholder": "Enter your password"
+          "label": "Cyfrinair",
+          "placeholder": "Rhowch eich cyfrinair"
         },
         "confirmPassword": {
-          "label": "Confirm Password",
-          "placeholder": "Confirm your password"
+          "label": "Cadarnhau Cyfrinair",
+          "placeholder": "Cadarnhewch eich cyfrinair"
         }
       },
       "messages": {
-        "passwordMismatch": "Passwords do not match",
-        "passwordRequired": "Password is required",
-        "emailRequired": "Email is required",
-        "registerLink": "No account? Register for free here",
-        "loginLink": "Already registered? Log in here"
+        "passwordMismatch": "Nid yw'r cyfrineiriau'n cyfateb",
+        "passwordRequired": "Mae angen cyfrinair",
+        "emailRequired": "Mae angen e-bost",
+        "registerLink": "Dim cyfrif? Cofrestrwch am ddim yma",
+        "loginLink": "Eisoes wedi cofrestru? Mewngofnodwch yma"
       }
     },
-    "apply": {
+    "application": {
       "title": "Gwneud Cais am Wiriad DBS Sylfaenol",
       "subtitle": "Cwblhewch y ffurflen gais isod i wneud cais am eich gwiriad DBS Sylfaenol gan y darparwr Llywodraeth swyddogol a'r Corff Cofrestredig",
-      "notes": "Fel unigolyn, rydych chi'n gymwys i wneud cais am 'Datgeliad Sylfaenol / Gwiriad DBS Sylfaenol', a elwir hefyd yn Wiriad Cofnod Troseddol. Mae'r gwiriad hwn ar gael i unrhyw un sy'n byw yng Nghymru, Lloegr a'r Alban ac mae'n chwiliad a gynhelir gan y Gwasanaeth Datgelu a Gwahardd. Y gwiriad sylfaenol yw tystysgrif a fydd yn dangos unrhyw gollfarnau troseddol heb eu disbyddu a rhybuddion amodol. Bydd y dystysgrif yn eiddo i chi. Eich cyfrifoldeb chi fydd ei dangos, ar gais, i gyflogwr posibl neu'r person / cwmni a ofynnodd i chi wneud cais amdani."
-    }
-  },
-  "config": {
-    "titles": {
-      "mr": "Mr",
-      "mrs": "Mrs",
-      "ms": "Ms"
+      "notes": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit",
+        "magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam"
+      ]
     }
   },
   "forms": {
     "applicantDetails": {
-      "title": "Manylion yr Ymgeisydd"
-    },
-    "birthDetails": {
-      "title": "Manylion geni"
-    },
-    "addressHistory": {
-      "title": "Hanes Cyfeiriad",
+      "title": "Manylion yr Ymgeisydd",
       "notes": [
-        "Bydd angen hanes cyfeiriad yr ymgeisydd arnom am y 5 mlynedd diwethaf.",
-        "Os oes gennych y manylion hyn ar gael, cliciwch uchod i ychwanegu manylion pellach.\nPeidiwch â phoeni os nad yw'r manylion hyn ar gael i chi nawr, gallwch eu nodi yn nes ymlaen."
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit",
+        "magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam"
       ]
     },
-    "additionalInfo": {
-      "title": "Gwybodaeth Ychwanegol"
+    "birthDetails": {
+      "title": "Manylion Genedigaeth",
+      "notes": [
+        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit",
+        "magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam"
+      ]
     },
-    "confirmation": {
-      "title": "Cadarnhad"
+    "addressHistoryDetails": {
+      "title": "Hanes Cyfeiriad",
+      "notes": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem riam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit",
+        "magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam",
+        "spiciatis unde omnis iste natus error sit d minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam"
+      ]
+    },
+    "additionalInfoDetails": {
+      "title": "Gwybodaeth Ychwanegol",
+      "notes": [
+        "Po fwyaf o wybodaeth a roddwch, y cyflymaf y bydd y canlyniadau ar gael",
+        "Os byddwch yn darparu manylion dogfen yma, RHAID i chi anfon prawf o'r ddogfen honno atom drwy e-bost neu BYDD y manylion yn cael eu heithrio a gallant ohirio eich cais"
+      ]
+    },
+    "confirmationDetails": {
+      "title": "Cadarnhad",
+      "notes": [
+        "Drwy gydsynio i'r cais hwn, rydych yn cydnabod bod canlyniad electronig yn cynnwys neges sy'n nodi naill ai bod y dystysgrif yn wag neu i aros am dystysgrif a fydd yn nodi bod fy nhystysgrif yn cynnwys gwybodaeth.",
+        "Mewn rhai achosion, gall y corff cofrestredig ddarparu'r wybodaeth hon yn uniongyrchol i'm cyflogwr cyn i mi dderbyn fy nhystysgrif. Rwy'n deall, os nad wyf yn cydsynio i ganlyniad electronig gael ei gyhoeddi i'r corff cofrestredig sy'n cyflwyno fy nghais, na ddylwn fwrw ymlaen â'r cais hwn a dylwn gyflwyno ffurflen gais bapur. Rwy'n deall, er mwyn tynnu fy nghaniatâd yn ôl tra bod fy nghais yn cael ei brosesu, fod yn rhaid i mi gysylltu â llinell gymorth y Gwasanaeth Datgelu a Gwahardd ar 03000 200 190. Yna bydd fy nghais yn cael ei dynnu'n ôl."
+      ]
+    },
+    "nameHistory": {
+      "title": "Hanes Enw"
     }
   },
   "errors": {
-    "isRequired": "{ key } yn ofynnol"
+    "isRequired": "{ key } yn ofynnol",
+    "dateBeforeToday": "Rhaid i'r dyddiad fod cyn Heddiw",
+    "atLeastOne": "{ key } rhaid bod ganddo o leiaf un cofnod",
+    "toDateAfterFromDate": "Rhaid i'r Dyddiad Cyntaf fod ar ôl y Dyddiad O",
+    "acknowledge": "Cydnabyddwch os gwelwch yn dda",
+    "selectOption": "Please select an option",
+    "incompleteAddressHistory": "Rhowch hanes cyfeiriad o leiaf 5 mlynedd"
   },
   "lists": {
     "genders": [
       {
         "code": "male",
-        "name": "Male"
+        "name": "Gwryw"
       },
       {
         "code": "female",
-        "name": "Female"
+        "name": "Benyw"
       },
       {
         "code": "other",
-        "name": "Other"
+        "name": "Arall"
       }
     ],
     "titles": [
@@ -152,7 +239,7 @@
       },
       {
         "code": "ms",
-        "name": "Ms"
+        "name": "Mae Ms"
       },
       {
         "code": "mrs",

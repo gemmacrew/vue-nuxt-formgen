@@ -2,16 +2,14 @@
 
   <div>
     <div>
-      <NuxtLink to="/apply?type=basic">Basic Apply</NuxtLink>
+      <NuxtLink to="/applications?type=basic">Basic Apply</NuxtLink>
     </div>
     <div>
-      <NuxtLink to="/apply?type=standard">Standard Apply</NuxtLink>
+      <NuxtLink to="/applications?type=standard">Standard Apply</NuxtLink>
     </div>
     <div>
-      <NuxtLink to="/apply?type=enhanced">Enhanced Apply</NuxtLink>
+      <NuxtLink to="/applications?type=enhanced">Enhanced Apply</NuxtLink>
     </div>
-
-    <input name="foo.bar[0].title" type="text" />
 
   </div>
 

@@ -6,6 +6,15 @@
                 :error-message="errorMessage?.[name]"
                 :name="name">
 
+    <template #list-item="{ value, index }">
+      <v-list-item-title>{{ value.streetNumber }} {{ value.route }}, {{ value.locality }}</v-list-item-title>
+      <v-list-item-title>{{ value.postalTown }}, {{ value.administrativeAreaLevel2 }}</v-list-item-title>
+      <v-list-item-title>{{ value.postalCode }}</v-list-item-title>
+      <v-list-item-subtitle class="text-high-emphasis">
+        <span class="text-base" v-if="value.fromDate">{{ $t('constants.fromDate')}}: {{ new Date(value.fromDate).toLocaleDateString() }}</span>
+        <span class="text-base" v-if="value.toDate"> - {{ new Date(value.toDate).toLocaleDateString()}}</span>
+      </v-list-item-subtitle>
+    </template>
     <template v-slot:default="{ fieldValues, errorMessages }">
 
       <v-autocomplete
@@ -15,8 +24,7 @@
         :search="search"
         :custom-filter="() => true"
         hide-no-data
-        class="mt-2"
-        hide-details="auto"
+        class="mt-[5px]"
         autocomplete="off"
         @update:search="search = $event"
         @update:model-value="onUpdateValue($event, fieldValues)"
@@ -28,9 +36,9 @@
         v-for="([key, field], index) in Object.entries(form.fields)" :key="key"
         :is="componentMap[field.component] || InputField"
         :name="`${key}`"
-        class="mt-2"
-        hide-details="auto"
         clearable
+        class="mt-[5px]"
+        hide-details="auto"
         :field-id="`${key}`"
         v-model="fieldValues[key]"
         :error-message="errorMessages || {}"

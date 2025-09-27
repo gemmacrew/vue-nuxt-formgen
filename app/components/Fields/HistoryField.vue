@@ -11,7 +11,7 @@
           <slot name="title">{{ computedLabel }}</slot>
         </div>
         <div>
-          <v-btn color="primary" icon="mdi-plus" style="width: 24px; height: 24px"
+          <v-btn v-bind="{... $attrs }" color="primary" icon="mdi-plus" style="width: 24px; height: 24px"
                  @click="onClickAddHistoryItem"></v-btn>
         </div>
       </v-card-title>
@@ -31,15 +31,16 @@
                 Object.entries(field.value).filter(([k, v]) => k !== 'fromDate' && k !== 'toDate').filter(([k, v]) => v).map(([k, v]) => v).join(' ')
               }}
             </v-list-item-title>
-            <v-list-item-subtitle class="text-high-emphasis">Since:
-              {{ field.value.fromDate ? new Date(field.value.fromDate).toLocaleDateString() : '' }}
+            <v-list-item-subtitle class="text-high-emphasis">
+              <span class="text-base" v-if="field.value.fromDate">{{ $t('constants.fromDate')}}: {{ new Date(field.value.fromDate).toLocaleDateString() }}</span>
+              <span class="text-base" v-if="field.value.toDate"> - {{ new Date(field.value.toDate).toLocaleDateString()}}</span>
             </v-list-item-subtitle>
           </slot>
 
           <template v-slot:append="{ }">
             <v-list-item-action class="flex align-end">
-              <v-icon class="opacity-30 m-2" @click="onClickEditHistoryItem(field.key)">mdi-pencil</v-icon>
-              <v-icon class="opacity-30 m-2" @click="onClickDeleteHistoryItem(field.key)">mdi-close</v-icon>
+              <v-icon class="opacity-30 m-2" v-bind="{... $attrs }" @click="onClickEditHistoryItem(field.key)">mdi-pencil</v-icon>
+              <v-icon class="opacity-30 m-2" v-bind="{... $attrs }" @click="onClickDeleteHistoryItem(field.key)">mdi-close</v-icon>
             </v-list-item-action>
           </template>
 
@@ -69,8 +70,8 @@
 </template>
 
 <script setup>
-import {z} from 'zod/v4'
-import {useSchema} from "~/composables/useSchema.js";
+
+import {useSchema} from "~~/shared/composables/useSchema";
 import {toTypedSchema} from "@vee-validate/zod";
 
 const emits = defineEmits(['update:model-value', 'save', 'cancel'])

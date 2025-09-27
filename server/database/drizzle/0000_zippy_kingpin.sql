@@ -9,8 +9,8 @@ CREATE TABLE `applicationAddressHistory` (
 	`country` text NOT NULL,
 	`postCode` text NOT NULL,
 	`fromDate` integer NOT NULL,
-	`createdAt` integer NOT NULL,
-	`updatedAt` integer,
+	`createdDate` integer NOT NULL,
+	`updatedDate` integer,
 	FOREIGN KEY (`applicationId`) REFERENCES `applications`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
@@ -19,13 +19,12 @@ CREATE TABLE `applicationNameHistory` (
 	`applicationId` integer,
 	`title` text,
 	`firstName` text,
-	`hasMiddleName` integer,
 	`middleName` text,
 	`lastName` text,
 	`fromDate` integer NOT NULL,
 	`toDate` integer NOT NULL,
-	`createdAt` integer NOT NULL,
-	`updatedAt` integer,
+	`createdDate` integer NOT NULL,
+	`updatedDate` integer,
 	FOREIGN KEY (`applicationId`) REFERENCES `applications`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
@@ -54,17 +53,17 @@ CREATE TABLE `applications` (
 	`dbsProfileNumber` text,
 	`electronicResults` integer,
 	`declaration` integer,
-	`createdAt` integer NOT NULL,
-	`updatedAt` integer
+	`createdDate` integer NOT NULL,
+	`updatedDate` integer
 );
 --> statement-breakpoint
 CREATE TABLE `users` (
+	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`email` text NOT NULL,
 	`passwordHash` text NOT NULL,
 	`stripCustomerId` text,
-	`createdAt` integer NOT NULL,
-	`updatedAt` integer
+	`createdDate` integer NOT NULL,
+	`updatedDate` integer
 );
 --> statement-breakpoint
-CREATE UNIQUE INDEX `users_email_unique` ON `users` (`email`);--> statement-breakpoint
 CREATE UNIQUE INDEX `users_stripCustomerId_unique` ON `users` (`stripCustomerId`);

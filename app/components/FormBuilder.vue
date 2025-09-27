@@ -1,24 +1,24 @@
 <template>
   <v-card flat class="pt-5">
     <v-row>
-      <v-col cols="12" sm="12" md="6" lg="6">
+      <v-col cols="12" sm="12" md="6" xl="4">
         <v-form @submit.prevent="e => e.preventDefault()">
           <template v-for="([key, field]) in Object.entries(props.fields)" :key="key">
             <component
               :is="componentMap[field.component] || InputField"
               :name="`${key}`"
               :field-id="key"
-              hide-details="auto"
               :model-value="fieldValues[key]"
               v-bind="field.props"
               :error-message="errors"
-              clearable
-              class="mt-2"
+              :readonly="readonly"
+              clearable="!readonly"
+              class="mt-[5px]"
               @update:model-value="onUpdate($event, key)"/>
           </template>
         </v-form>
       </v-col>
-      <v-col cols="12" sm="12" md="6" lg="6">
+      <v-col cols="12" sm="12" md="6" xl="8">
         <div
           style="height: 100%;
           border: 1px solid #E2E2E2;
@@ -43,13 +43,12 @@ import AddressHistoryField from "~/components/Fields/AddressHistoryField.vue";
 import SelectField from "~/components/Fields/SelectField.vue";
 import RadioField from "~/components/Fields/RadioField.vue";
 import CheckboxField from "~/components/Fields/CheckboxField.vue";
-import FieldSet from "~/components/Fields/FieldSet.vue";
 import {useForm} from "vee-validate";
-import {useSchema} from "~/composables/useSchema.js";
 import {toTypedSchema} from "@vee-validate/zod";
+import {useSchema} from '#shared/composables/useSchema'
 
-const {tm, rt, t} = useI18n()
-
+const {tm, rt} = useI18n()
+const emits = defineEmits(['update'])
 const props = defineProps({
   formName: String,
   data: {
@@ -61,28 +60,27 @@ const props = defineProps({
     default: () => ({}),
   }
 })
+
 const componentMap = {
   InputField,
   SelectField,
   NameHistoryField,
   AddressHistoryField,
   RadioField,
-  FieldSet,
   CheckboxField
 }
 
+const readonly = ref(false)
 const schema = useSchema()
 const {errors, meta} = useForm({
-  validationSchema: toTypedSchema(schema[props.formName]),
+  validationSchema: toTypedSchema(schema[props.formName] || {}),
 })
 
 const notes = tm(`forms.${props.formName}.notes`)
-
-const emits = defineEmits(['update'])
 const fieldValues = ref({})
 
 Object.keys(props.fields).forEach((key) => {
-  if (props.data[key]) {
+  if (Object.prototype.hasOwnProperty.call(props.data, key)) {
     fieldValues.value[key] = props.data[key]
   }
 })
@@ -94,6 +92,7 @@ watch(() => props.data, (data) => {
     }
   })
 }, {deep: true})
+
 watch(() => meta, (meta) => {
   emits('update', {values: fieldValues.value, meta: meta.value})
 }, {deep: true})

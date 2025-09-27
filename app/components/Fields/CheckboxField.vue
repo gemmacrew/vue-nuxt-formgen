@@ -20,7 +20,7 @@ const props = defineProps({
   name: String,
   type: String,
   label: String,
-  modelValue: [String, Date],
+  modelValue: Boolean,
   errorMessage: {
     type: Object,
     default: () => ({})

@@ -1,8 +1,8 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "57d8721d-7663-4b6b-9264-c8e6d48160ca",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "ea89076c-946b-4703-9b8c-dc6e0db43bf8",
+  "prevId": "992ced26-592c-4fd5-9445-16f3875ba152",
   "tables": {
     "applicationAddressHistory": {
       "name": "applicationAddressHistory",
@@ -63,8 +63,8 @@
           "notNull": true,
           "autoincrement": false
         },
-        "postCode": {
-          "name": "postCode",
+        "postalCode": {
+          "name": "postalCode",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
@@ -377,6 +377,13 @@
           "notNull": false,
           "autoincrement": false
         },
+        "paymentStatus": {
+          "name": "paymentStatus",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "createdDate": {
           "name": "createdDate",
           "type": "integer",
@@ -422,8 +429,8 @@
           "notNull": true,
           "autoincrement": false
         },
-        "stripCustomerId": {
-          "name": "stripCustomerId",
+        "stripeCustomerId": {
+          "name": "stripeCustomerId",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
@@ -445,10 +452,10 @@
         }
       },
       "indexes": {
-        "users_stripCustomerId_unique": {
-          "name": "users_stripCustomerId_unique",
+        "users_stripeCustomerId_unique": {
+          "name": "users_stripeCustomerId_unique",
           "columns": [
-            "stripCustomerId"
+            "stripeCustomerId"
           ],
           "isUnique": true
         }

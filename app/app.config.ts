@@ -1,6 +1,8 @@
-const addressHistory = {
+import {deepmerge} from "deepmerge-ts";
+
+const addressDetails = {
   icon: 'mdi-home-circle',
-  schema: 'addressHistory',
+  schema: 'addressDetails',
   fields: {
     streetNumber: {props: {autocomplete: 'off'}},
     route: {props: {autocomplete: 'off'}},
@@ -15,6 +17,11 @@ const addressHistory = {
       }
     },
     postalCode: {props: {autocomplete: 'off'}},
+  }
+}
+const datedAddressDetails = deepmerge(addressDetails, {
+  schema: 'datedAddressDetails',
+  fields: {
     fromDate: {
       component: 'InputField',
       props: {
@@ -23,10 +30,11 @@ const addressHistory = {
       }
     }
   }
-}
-const nameHistory = {
+})
+
+const nameDetails = {
   icon: 'mdi-account-circle',
-  schema: 'nameHistory',
+  schema: 'nameDetails',
   fields: {
     title: {
       props: {itemsReference: 'lists.titles'},
@@ -51,12 +59,10 @@ const nameHistory = {
     }
   }
 }
+
 const applicantDetails = {
   icon: 'mdi-account-circle',
   fields: {
-    email: {
-      props: {disabled: true},
-    },
     title: {
       props: {itemsReference: 'lists.titles'},
       component: 'SelectField',
@@ -67,8 +73,8 @@ const applicantDetails = {
     },
     middleName: {
       props: {
-        reveal: (application: { hasMiddleName: string }) => {
-          return application.hasMiddleName === 'true'
+        reveal: (application: { hasMiddleName: boolean }) => {
+          return application.hasMiddleName === true
         }
       }
     },
@@ -76,12 +82,12 @@ const applicantDetails = {
     hasNameHistory: {
       component: 'RadioField'
     },
-    previousNames: {
+    previousNameHistory: {
       component: 'NameHistoryField',
       props: {
-        form: nameHistory,
-        reveal: (application: { hasNameHistory: string }) => {
-          return application.hasNameHistory === 'true'
+        form: nameDetails,
+        reveal: (application: { hasNameHistory: boolean }) => {
+          return application.hasNameHistory === true
         }
       }
     }
@@ -121,17 +127,32 @@ const birthDetails = {
     mothersMaidenName: {},
   }
 }
-const addressHistoryDetails = {
+
+const organisationDetails = {
+  icon: 'mdi-office-circle',
+  fields: {
+    organisationName: {},
+    organisationAddress: {
+      component: 'AddressHistoryField',
+      props: {
+        form: addressDetails,
+      }
+    },
+  }
+}
+
+const addressHistory = {
   icon: 'mdi-home-circle',
   fields: {
     addressHistory: {
       component: 'AddressHistoryField',
       props: {
-        form: addressHistory,
+        form: datedAddressDetails,
       }
     },
   }
 }
+
 const additionalInfoDetails = {
   icon: 'mdi-information',
   fields: {
@@ -140,8 +161,16 @@ const additionalInfoDetails = {
     },
     passportNumber: {
       props: {
-        reveal: (application: { hasPassport: string }) => {
-          return application.hasPassport === 'true'
+        reveal: (application: { hasPassport: boolean }) => {
+          return application.hasPassport === true
+        }
+      }
+    },
+    passportDob: {
+      props: {
+        type: 'date',
+        reveal: (application: { hasPassport: boolean }) => {
+          return application.hasPassport === true
         }
       }
     },
@@ -150,25 +179,78 @@ const additionalInfoDetails = {
       props: {
         itemsReference: ['lists.commonCountries', 'lists.countries'],
         type: 'autocomplete',
-        reveal: (application: { hasPassport: string }) => {
-          return application.hasPassport === 'true'
+        reveal: (application: { hasPassport: boolean }) => {
+          return application.hasPassport === true
+        }
+      }
+    },
+    passportNationality: {
+      component: 'SelectField',
+      props: {
+        type: 'autocomplete', itemsReference: ['lists.commonNationalities', 'lists.nationalities'],
+        reveal: (application: { hasPassport: boolean }) => {
+          return application.hasPassport === true
+        }
+      },
+    },
+    passportIssueDate: {
+      component: 'InputField',
+      props: {
+        type: 'date',
+        max: new Date(), reveal: (application: { hasPassport: boolean }) => {
+          return application.hasPassport === true
         }
       }
     },
     hasDrivingLicence: {
       component: 'RadioField'
     },
-    drivingLicenceDetails: {
-      component: 'FieldSet',
+    drivingLicenceNumber: {
       props: {
-        fields: {
-          drivingLicenceNumber: {},
-        },
-        reveal: (application: { hasDrivingLicence: string }) => {
-          return application.hasDrivingLicence === 'true'
+        reveal: (application: { hasDrivingLicence: boolean }) => {
+          return application.hasDrivingLicence === true
+        }
+      },
+    },
+    drivingLicenceDob: {
+      props: {
+        type: 'date',
+        reveal: (application: { hasDrivingLicence: boolean }) => {
+          return application.hasDrivingLicence === true
+        }
+      },
+    },
+    drivingLicenceValidFromDate: {
+      props: {
+        type: 'date',
+        reveal: (application: { hasDrivingLicence: boolean }) => {
+          return application.hasDrivingLicence === true
+        }
+      },
+    },
+    drivingLicenceType: {
+      component: 'RadioField',
+      props: {
+        options: [
+          {label: 'paper', value: 'paper'},
+          {label: 'card', value: 'card'}
+        ],
+        reveal: (application: { hasDrivingLicence: boolean }) => {
+          return application.hasDrivingLicence === true
+        }
+      },
+    },
+    drivingLicenceCountryOfIssue: {
+      component: 'SelectField',
+      props: {
+        itemsReference: ['lists.commonCountries', 'lists.countries'],
+        type: 'autocomplete',
+        reveal: (application: { hasDrivingLicence: boolean }) => {
+          return application.hasDrivingLicence === true
         }
       }
     },
+
     dbsProfileNumber: {},
   }
 }
@@ -183,40 +265,68 @@ const confirmationDetails = {
     }
   }
 }
+const positionDetails = {
+  icon: 'mdi-check-circle',
+  fields: {
+    positionAppliedFor: {
+      component: 'SelectField',
+      props: {
+        itemsReference: 'lists.positions',
+        type: 'autocomplete'
+      }
+    },
+    jobDescription: {
+      props: {
+        type: 'textarea',
+      }
+    },
+    contractualAgreement: {
+      component: 'CheckboxField'
+    },
+    eligibilityGuidelines: {
+      component: 'CheckboxField'
+    },
+    dbsGuidelines: {
+      component: 'CheckboxField'
+    },
+    dbsCodeOfConduct: {
+      component: 'CheckboxField'
+    },
+    dbsIdentityCheckingGuidelines: {
+      component: 'CheckboxField'
+    }
+  }
+}
+
+const basicAdditionalInfoDetails = deepmerge({}, additionalInfoDetails, {
+  fields: {
+    passportDob: {props: {hidden: true}},
+    passportNationality: {props: {hidden: true}},
+    passportIssueDate: {props: {hidden: true}}
+  }
+})
 
 export default defineAppConfig({
   googleMapsApiKey: 'AIzaSyDuHCycrOUqB1PEnzTVSXSfEofuwuM31Ig',
 
-  /**
-   * correspond to the steps in the stepper window
-   */
-  applicationForms: {
-    applicantDetails,
-    birthDetails,
-    addressHistoryDetails,
-    additionalInfoDetails,
-    confirmationDetails,
-    addressHistory,
-    nameHistory
-  },
-
-  /**
-   * a form represents a single validatable schema e.g. basicApplication, standardApplication, nameHistory
-   */
   applicationTypes: {
     basic: {
       forms: {
         applicantDetails,
         birthDetails,
-        addressHistoryDetails,
-        additionalInfoDetails,
+        addressHistory,
+        additionalInfoDetails: basicAdditionalInfoDetails,
         confirmationDetails
       }
     },
     standard: {
       forms: {
+        positionDetails,
+        organisationDetails,
         applicantDetails,
-        nameHistory,
+        birthDetails,
+        addressHistory,
+        additionalInfoDetails,
         confirmationDetails
       },
     }

@@ -30,6 +30,7 @@
     "@vueuse/core": "^13.9.0",
     "deepmerge-ts": "^7.1.5",
     "drizzle-orm": "^0.44.5",
+    "drizzle-seed": "^0.3.1",
     "eslint": "^9.34.0",
     "flag-icons": "^7.5.0",
     "nuxt": "^4.1.0",

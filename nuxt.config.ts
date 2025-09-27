@@ -77,7 +77,7 @@ export default defineNuxtConfig({
         themes: {
           dbsTheme: {
             colors: {
-              primary: '#52247f',
+              primary: '#00703c',
               'primary-light': '#9E247B',
               secondary: '#8EC5A8',
               'accent-primary': '#D7D2CB',
