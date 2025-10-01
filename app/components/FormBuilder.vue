@@ -12,7 +12,6 @@
               v-bind="field.props"
               :error-message="errors"
               :readonly="readonly"
-              @focused="onFocus"
               :clearable="!readonly"
               class="mt-[5px]"
               @update:model-value="onUpdate($event, key)"/>
@@ -83,22 +82,17 @@ Object.keys(props.fields).forEach((key) => {
   }
 })
 
-const onFocus = (focused, key) => {
-
-  debugger
-  if (te(`components.fields.${key}.hint`)) {
-    debugger
-    notes.value = [t(`components.fields.${key}.hint`)]
-  } else {
-    notes.value = tm(`forms.${props.formName}.notes`).map(note => rt(note))
-  }
-}
 watch(() => props.data, (data) => {
   Object.keys(props.fields).forEach((key) => {
     if (data[key]) {
       fieldValues.value[key] = data[key]
     }
   })
+
+  const {application: ApplicationSchema } = useSchema()
+  const validity = ApplicationSchema[data.type].safeParse(data)
+  console.log('### SAFE PARSE', JSON.parse(validity?.error?.message))
+
 }, {deep: true})
 
 watch(() => meta, (meta) => {

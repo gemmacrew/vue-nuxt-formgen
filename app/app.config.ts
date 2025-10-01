@@ -62,6 +62,7 @@ const nameDetails = {
 const applicantDetails = {
   icon: 'mdi-account-circle',
   fields: {
+    email: {},
     title: {
       props: {itemsReference: 'lists.titles'},
       component: 'SelectField',

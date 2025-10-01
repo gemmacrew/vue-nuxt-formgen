@@ -17,7 +17,7 @@
   },
   "components": {
     "header": {
-      "title": "DBS Checks Online"
+      "title": "DBS Checks"
     },
     "fields": {
       "contractualAgreement": {
@@ -317,6 +317,7 @@
   },
   "errors": {
     "isRequired": "{ key } is required",
+    "invalidEmail": "Please enter a valid email address",
     "dateBeforeToday": "{ key } must be before Today",
     "atLeastOne": "{ key } must have at least one record",
     "onlyOne": "Please enter one and only one item",

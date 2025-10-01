@@ -80,7 +80,6 @@ const dateBeforeDateRefiner = (path1, path2) => {
 const ApplicationDetailsSchema = z.object({
   id: z.number().nullish().optional(),
   type: z.enum(['basic', 'standard', 'enhanced']),
-  email: z.email('invalidEmail').trim().min(1, 'isRequired'),
   paymentStatus: z.enum(['pending', 'paid', 'cancelled', 'failed', 'refunded', 'unpaid', 'unknown'], 'isRequired').nullish().optional(),
   checkoutSessionId: z.string().nullish().optional(),
   createdDate: z.coerce.date().nullish().optional(),
@@ -118,6 +117,7 @@ const DatedAddressDetailsSchema = AddressDetailsSchema.extend({
   .refine(...Object.values(dateValidRefiner('fromDate')))
 
 const ApplicantDetailsSchema = z.object({
+  email: z.email('invalidEmail').trim().min(1, 'isRequired'),
   title: z.string('isRequired').trim().min(1, 'isRequired'),
   firstName: z.string('isRequired').trim().min(1, 'isRequired'),
   lastName: z.string('isRequired').trim().min(1, 'isRequired'),

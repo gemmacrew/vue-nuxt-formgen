@@ -32,15 +32,22 @@
               }}
             </v-list-item-title>
             <v-list-item-subtitle class="text-high-emphasis">
-              <span class="text-base" v-if="field.value.fromDate">{{ $t('constants.fromDate')}}: {{ new Date(field.value.fromDate).toLocaleDateString() }}</span>
-              <span class="text-base" v-if="field.value.toDate"> - {{ new Date(field.value.toDate).toLocaleDateString()}}</span>
+              <span class="text-base" v-if="field.value.fromDate">{{ $t('constants.fromDate') }}: {{
+                  new Date(field.value.fromDate).toLocaleDateString()
+                }}</span>
+              <span class="text-base"
+                    v-if="field.value.toDate"> - {{ new Date(field.value.toDate).toLocaleDateString() }}</span>
             </v-list-item-subtitle>
           </slot>
 
           <template v-slot:append="{ }">
             <v-list-item-action class="flex align-end">
-              <v-icon class="opacity-30 m-2" v-bind="{... $attrs }" @click="onClickEditHistoryItem(field.key)">mdi-pencil</v-icon>
-              <v-icon class="opacity-30 m-2" v-bind="{... $attrs }" @click="onClickDeleteHistoryItem(field.key)">mdi-close</v-icon>
+              <v-icon class="opacity-30 m-2" v-bind="{... $attrs }" @click="onClickEditHistoryItem(field.key)">
+                mdi-pencil
+              </v-icon>
+              <v-icon class="opacity-30 m-2" v-bind="{... $attrs }" @click="onClickDeleteHistoryItem(field.key)">
+                mdi-close
+              </v-icon>
             </v-list-item-action>
           </template>
 
@@ -88,19 +95,20 @@ const props = defineProps({
 const showHistoryItemCard = ref(false)
 const editIndex = ref(-1)
 const fieldValues = ref({})
-
 const schema = useSchema()
 const validationSchema = schema[props.form.schema] || {}
 
-Object.entries(props.form.fields).forEach(([key, value]) => {
-  fieldValues.value[key] = value.props?.default || null
-})
-
+const initFieldValues = (fields) => {
+  showHistoryItemCard.value = false
+  Object.entries(fields).forEach(([key, value]) => {
+    fieldValues.value[key] = value.props?.default || null
+  })
+  editIndex.value = -1
+}
 const {push, remove, fields} = useFieldArray(props.name)
 props.modelValue.forEach(item => {
   push(item)
 })
-
 const {meta, errors} = useForm({
   validationSchema: toTypedSchema(validationSchema),
 })
@@ -115,6 +123,8 @@ const computedErrorMessage = computed(() => {
   }
   return ''
 })
+
+initFieldValues(props.form.fields)
 
 const onClickEditHistoryItem = (index) => {
   fieldValues.value = JSON.parse(JSON.stringify(fields.value.find(field => field.key === index).value))
@@ -135,16 +145,12 @@ const onClickSave = () => {
     fields.value.find(field => field.key === editIndex.value).value = fieldValues.value
   }
 
-  showHistoryItemCard.value = false
-  fieldValues.value = {}
-  editIndex.value = -1
+  initFieldValues(props.form.fields)
+}
+const onClickCancel = () => {
+  initFieldValues(props.form.fields)
 }
 
-const onClickCancel = () => {
-  showHistoryItemCard.value = false
-  fieldValues.value = {}
-  editIndex.value = -1
-}
 
 watch(() => fields, (fields) => {
   emits('update:model-value', fields.value.map(field => field.value))
