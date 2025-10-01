@@ -108,12 +108,10 @@ if (props.isCancelled) {
       const {data: application, success} = await $fetch(`/api/applications/${applicationId}`)
       application.paymentStatus = 'paid'
       application.checkoutSessionId = sessionId
-      const response = await $fetch(`/api/applications/${applicationId}`, {
+      await $fetch(`/api/applications/${applicationId}`, {
         method: 'PUT',
         body: application
       })
-
-      console.log(response)
     }
   }
 }

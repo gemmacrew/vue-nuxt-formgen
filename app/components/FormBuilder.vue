@@ -89,10 +89,6 @@ watch(() => props.data, (data) => {
     }
   })
 
-  const {application: ApplicationSchema } = useSchema()
-  const validity = ApplicationSchema[data.type].safeParse(data)
-  console.log('### SAFE PARSE', JSON.parse(validity?.error?.message))
-
 }, {deep: true})
 
 watch(() => meta, (meta) => {

@@ -9,8 +9,8 @@
 </template>
 <script setup>
 
-const runtimeConfig = useRuntimeConfig()
-const googleMapsApiKey = runtimeConfig.public.googleMapsApiKey
+// const runtimeConfig = useRuntimeConfig()
+const googleMapsApiKey = 'AIzaSyDuHCycrOUqB1PEnzTVSXSfEofuwuM31Ig' //runtimeConfig.public.googleMapsApiKey
 
 useHead({
   script: [{

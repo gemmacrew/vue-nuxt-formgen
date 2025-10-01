@@ -44,9 +44,6 @@ watch(selectedLocale, (newLocale) => {
   setLocale(newLocale.code)
 })
 
-watch(showNavBar, (showNavBar) => {
-  console.log(showNavBar)
-})
 </script>
 
 <script setup lang="ts">
