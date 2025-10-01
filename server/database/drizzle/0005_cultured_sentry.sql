@@ -1,1 +1,0 @@
-ALTER TABLE `applicationAddressHistory` ADD `addressType` text;

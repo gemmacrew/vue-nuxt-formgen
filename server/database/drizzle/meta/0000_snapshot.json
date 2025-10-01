@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "57d8721d-7663-4b6b-9264-c8e6d48160ca",
+  "id": "7a10c88f-fb20-4306-b19d-bf03e036a38c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "applicationAddressHistory": {
@@ -13,6 +13,13 @@
           "primaryKey": true,
           "notNull": true,
           "autoincrement": true
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         },
         "applicationId": {
           "name": "applicationId",
@@ -63,8 +70,8 @@
           "notNull": true,
           "autoincrement": false
         },
-        "postCode": {
-          "name": "postCode",
+        "postalCode": {
+          "name": "postalCode",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
@@ -342,6 +349,27 @@
           "notNull": false,
           "autoincrement": false
         },
+        "passportNationality": {
+          "name": "passportNationality",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "passportIssueDate": {
+          "name": "passportIssueDate",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "passportDob": {
+          "name": "passportDob",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "hasDrivingLicence": {
           "name": "hasDrivingLicence",
           "type": "integer",
@@ -356,8 +384,57 @@
           "notNull": false,
           "autoincrement": false
         },
+        "drivingLicenceDob": {
+          "name": "drivingLicenceDob",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "drivingLicenceValidFromDate": {
+          "name": "drivingLicenceValidFromDate",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "drivingLicenceCountryOfIssue": {
+          "name": "drivingLicenceCountryOfIssue",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "drivingLicenceType": {
+          "name": "drivingLicenceType",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "dbsProfileNumber": {
           "name": "dbsProfileNumber",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "positionAppliedFor": {
+          "name": "positionAppliedFor",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "jobDescription": {
+          "name": "jobDescription",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "organisationName": {
+          "name": "organisationName",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
@@ -373,6 +450,20 @@
         "declaration": {
           "name": "declaration",
           "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "paymentStatus": {
+          "name": "paymentStatus",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "checkoutSessionId": {
+          "name": "checkoutSessionId",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -401,17 +492,10 @@
     "users": {
       "name": "users",
       "columns": {
-        "id": {
-          "name": "id",
-          "type": "integer",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": true
-        },
         "email": {
           "name": "email",
           "type": "text",
-          "primaryKey": false,
+          "primaryKey": true,
           "notNull": true,
           "autoincrement": false
         },
@@ -419,11 +503,18 @@
           "name": "passwordHash",
           "type": "text",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false
         },
-        "stripCustomerId": {
-          "name": "stripCustomerId",
+        "otp": {
+          "name": "otp",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "stripeCustomerId": {
+          "name": "stripeCustomerId",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
@@ -445,10 +536,10 @@
         }
       },
       "indexes": {
-        "users_stripCustomerId_unique": {
-          "name": "users_stripCustomerId_unique",
+        "users_stripeCustomerId_unique": {
+          "name": "users_stripeCustomerId_unique",
           "columns": [
-            "stripCustomerId"
+            "stripeCustomerId"
           ],
           "isUnique": true
         }

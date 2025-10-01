@@ -1,9 +1,10 @@
 import {sqliteTable} from 'drizzle-orm/sqlite-core'
+import {z} from "zod/v4/index";
 
 export const users = sqliteTable('users', t => ({
-    id: t.integer().primaryKey({autoIncrement: true}),
-    email: t.text().notNull(),
-    passwordHash: t.text().notNull(),
+    email: t.text().primaryKey(),
+    passwordHash: t.text(),
+    otp: t.text(),
     stripeCustomerId: t.text().unique(),
     createdDate: t.integer({mode: 'timestamp_ms'}).$defaultFn(() => new Date()).notNull(),
     updatedDate: t.integer({mode: 'timestamp_ms'}).$defaultFn(() => new Date()).$onUpdate(() => new Date()),
@@ -22,6 +23,7 @@ export const applications = sqliteTable('applications', t => (
     middleName: t.text(),
     lastName: t.text(),
     hasNameHistory: t.integer({mode: 'boolean'}),
+
     //birth details
     gender: t.text(),
     dob: t.integer({mode: 'timestamp_ms'}).$defaultFn(() => new Date()).notNull(),
@@ -30,13 +32,29 @@ export const applications = sqliteTable('applications', t => (
     nationalityAtBirth: t.text(),
     currentNationality: t.text(),
     mothersMaidenName: t.text(),
+
     //additional info
     hasPassport: t.integer({mode: 'boolean'}),
     passportNumber: t.text(),
     passportCountryOfIssue: t.text(),
+    passportNationality: t.text(),
+    passportIssueDate: t.integer({mode: 'timestamp_ms'}),
+    passportDob: t.integer({mode: 'timestamp_ms'}),
+    // ----
     hasDrivingLicence: t.integer({mode: 'boolean'}),
     drivingLicenceNumber: t.text(),
+    drivingLicenceDob: t.integer({mode: 'timestamp_ms'}),
+    drivingLicenceValidFromDate: t.integer({mode: 'timestamp_ms'}),
+    drivingLicenceCountryOfIssue: t.text(),
+    drivingLicenceType: t.text(),
+    // ----
     dbsProfileNumber: t.text(),
+
+    //organisation details
+    positionAppliedFor: t.text(),
+    jobDescription: t.text(),
+    organisationName: t.text(),
+
     //confirmation details
     electronicResults: t.integer({mode: 'boolean'}),
     declaration: t.integer({mode: 'boolean'}),

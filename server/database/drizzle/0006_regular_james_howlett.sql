@@ -1,1 +1,0 @@
-ALTER TABLE `applicationAddressHistory` RENAME COLUMN "addressType" TO "type";

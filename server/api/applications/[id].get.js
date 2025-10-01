@@ -21,7 +21,8 @@ export default defineEventHandler(async (event) => {
 			data: {
 				...application,
 				previousNameHistory,
-				addressHistory
+				addressHistory: addressHistory.filter(address => address.type === 'applicant'),
+				organisationAddress: addressHistory.filter(address => address.type === 'organisation')
 			}
 		}
 	}

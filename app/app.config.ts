@@ -4,12 +4,12 @@ const addressDetails = {
   icon: 'mdi-home-circle',
   schema: 'addressDetails',
   fields: {
-    type: {props: {autocomplete: 'off', default: 'applicant', hidden: true}},
-    streetNumber: {props: {autocomplete: 'off'}},
-    route: {props: {autocomplete: 'off'}},
-    locality: {props: {autocomplete: 'off'}},
-    postalTown: {props: {autocomplete: 'off'}},
-    administrativeAreaLevel2: {props: {autocomplete: 'off'}},
+    type: {props: {default: 'applicant', hidden: true}},
+    streetNumber: {props: {}},
+    route: {props: {}},
+    locality: {props: {}},
+    postalTown: {props: {}},
+    administrativeAreaLevel2: {props: {}},
     country: {
       component: 'SelectField',
       props: {
@@ -17,7 +17,7 @@ const addressDetails = {
         type: 'autocomplete'
       }
     },
-    postalCode: {props: {autocomplete: 'off'}},
+    postalCode: {props: {}},
   }
 }
 const datedAddressDetails = deepmerge(addressDetails, {

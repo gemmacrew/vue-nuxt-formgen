@@ -13,16 +13,29 @@
                   :to="$localePath('which-dbs-check')">Which DBS
           Check?
         </NuxtLink>
-        <NuxtLink class="pl-1 hover:border-red-500 border-white border-l-2 text-center text-blue-darken-4 my-auto"
-                  :to="$localePath('applications')">Apply
-        </NuxtLink>
+        <v-menu transition="slide-y-transition" location="center">
+          <template v-slot:activator="{ props }">
+            <div v-bind="props" class="pl-1 hover:border-red-500 border-white border-l-2 text-center text-blue-darken-4 my-auto">Apply</div>
+          </template>
+          <v-list class="mt-[54px]">
+            <v-list-item
+              v-for="([title, subtitle, type], i) in applications"
+              :key="i"
+              class="w-[500px]"
+              :title="title"
+              :subtitle="subtitle"
+              :value="title"
+              @click="navigateTo( `/apply?type=${type}`)"
+            />
+          </v-list>
+        </v-menu>
         <NuxtLink class="pl-1 hover:border-red-500 border-white border-l-2 text-center text-blue-darken-4 my-auto"
                   :to="$localePath('faq')">FAQ
         </NuxtLink>
         <NuxtLink class="pl-1 hover:border-red-500 border-white border-l-2 text-center text-blue-darken-4 my-auto"
                   :to="$localePath('tracking')">Tracking
         </NuxtLink>
-        <div class="ml-10" />
+        <div class="ml-10"/>
       </div>
       <template v-slot:append>
         <v-select
@@ -30,19 +43,22 @@
           variant="plain"
           v-model="selectedLocale"
           return-object
-          class="m-auto w-[150px] text-blue-darken-4 "
+          class="m-auto w-auto text-blue-darken-4 "
           :items="locales"
         >
           <template #selection="{item, index}">
-            <div>
+            <div class="hidden lg:block">
               <span :class="`fi fi-${item.raw.flagCode} mr-1`"></span>
               {{ item.title }}
             </div>
+            <div class="block lg:hidden">
+              <span :class="`fi fi-${item.raw.flagCode} mr-1`"></span>
+            </div>
           </template>
           <template v-slot:item="{ props: itemProps, item }">
-            <v-list-item v-bind="itemProps" :title="item.raw.title">
+            <v-list-item v-bind="itemProps">
               <template #prepend>
-                <span :class="`fi fi-${item.raw.flagCode} mr-2`"></span>
+                <span :class="`fi fi-${item.raw.flagCode} mx  -2`"></span>
               </template>
             </v-list-item>
           </template>

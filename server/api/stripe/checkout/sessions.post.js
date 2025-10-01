@@ -15,32 +15,32 @@ export default defineEventHandler(async (event) => {
     try {
       const application = await readValidatedBody(event, applicationSchema[type].parse)
 
-      const user = await db.query.users.findFirst({
+      let user = await db.query.users.findFirst({
         where: eq(tables.users.email, application.email),
       })
 
       if (!user) {
-        throw createError({
-          statusCode: 401,
-          statusMessage: 'Unauthorized',
-        })
+				([user] = await db.insert(tables.users).values({
+					email: application.email,
+				}).returning())
       }
 
       let stripeCustomerId = user.stripeCustomerId
       if (!stripeCustomerId) {
-        // get stripe customer
+				// get stripe customer
         const customerList = await stripe.customers.list({
           email: application.email
         })
 
         let customer = customerList?.data?.[0]
         if (!customer) {
-          customer = await stripe.customers.create({email: application.email})
-        }
-        stripeCustomerId = customer.id
+					customer = await stripe.customers.create({email: application.email})
+				}
+
+				stripeCustomerId = customer.id
         await db.update(tables.users).set({
           stripeCustomerId: customer.id,
-        }).where(eq(tables.users.id, user.id))
+        }).where(eq(tables.users.email, user.email))
       }
 
       const prices = await stripe.prices.list({
@@ -58,7 +58,7 @@ export default defineEventHandler(async (event) => {
       application.paymentStatus = 'pending'
 
       if (application.id) {
-        response = await $fetch(`/api/applications/${application.id}`, {
+				response = await $fetch(`/api/applications/${application.id}`, {
           method: 'PUT',
           body: application
         })

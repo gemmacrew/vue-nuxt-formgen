@@ -1,5 +1,6 @@
 CREATE TABLE `applicationAddressHistory` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+	`type` text,
 	`applicationId` integer,
 	`streetNumber` text NOT NULL,
 	`route` text,
@@ -7,7 +8,7 @@ CREATE TABLE `applicationAddressHistory` (
 	`postalTown` text,
 	`administrativeAreaLevel2` text,
 	`country` text NOT NULL,
-	`postCode` text NOT NULL,
+	`postalCode` text NOT NULL,
 	`fromDate` integer NOT NULL,
 	`createdDate` integer NOT NULL,
 	`updatedDate` integer,
@@ -48,22 +49,34 @@ CREATE TABLE `applications` (
 	`hasPassport` integer,
 	`passportNumber` text,
 	`passportCountryOfIssue` text,
+	`passportNationality` text,
+	`passportIssueDate` integer,
+	`passportDob` integer,
 	`hasDrivingLicence` integer,
 	`drivingLicenceNumber` text,
+	`drivingLicenceDob` integer,
+	`drivingLicenceValidFromDate` integer,
+	`drivingLicenceCountryOfIssue` text,
+	`drivingLicenceType` text,
 	`dbsProfileNumber` text,
+	`positionAppliedFor` text,
+	`jobDescription` text,
+	`organisationName` text,
 	`electronicResults` integer,
 	`declaration` integer,
+	`paymentStatus` text,
+	`checkoutSessionId` text,
 	`createdDate` integer NOT NULL,
 	`updatedDate` integer
 );
 --> statement-breakpoint
 CREATE TABLE `users` (
-	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-	`email` text NOT NULL,
-	`passwordHash` text NOT NULL,
-	`stripCustomerId` text,
+	`email` text PRIMARY KEY NOT NULL,
+	`passwordHash` text,
+	`otp` text,
+	`stripeCustomerId` text,
 	`createdDate` integer NOT NULL,
 	`updatedDate` integer
 );
 --> statement-breakpoint
-CREATE UNIQUE INDEX `users_stripCustomerId_unique` ON `users` (`stripCustomerId`);
+CREATE UNIQUE INDEX `users_stripeCustomerId_unique` ON `users` (`stripeCustomerId`);

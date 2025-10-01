@@ -38,7 +38,6 @@ const onPayNow = async () => {
         },
       })
 
-      debugger
       const {url} = response
       navigateTo(url, {external: true})
     } else {
