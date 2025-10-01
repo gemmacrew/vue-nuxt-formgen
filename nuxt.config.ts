@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: {enabled: true},
 
-  css: ['./assets/css/global.scss'],
+  // css: ['./assets/css/global.scss'],
 
   runtimeConfig: {
     public: {
@@ -68,9 +68,9 @@ export default defineNuxtConfig({
     moduleOptions: {
       /* module specific options */
       // disableVuetifyStyles: true,
-      styles: {
-        configFile: './assets/css/components.scss'
-      },
+      // styles: {
+      //   configFile: './assets/css/components.scss'
+      // },
     },
     vuetifyOptions: {
       /* vuetify options */
