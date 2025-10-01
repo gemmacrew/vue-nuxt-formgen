@@ -9,7 +9,6 @@ import {useStorage} from "@vueuse/core";
 
 definePageMeta({
   middleware: ['auth'],
-  layout: 'simple',
 })
 
 const ready = ref(false)

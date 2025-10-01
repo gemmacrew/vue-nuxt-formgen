@@ -1,6 +1,6 @@
 <template>
 
-  <v-card class="w-[500px] mt-20 mx-auto p-10 rounded-lg border text-center">
+  <v-card class="w-[500px] mt-40 mx-auto p-10 rounded-lg border text-center">
     <template #title>
       <v-icon
         class="mb-2"
@@ -29,8 +29,20 @@
           <v-col cols="6">{{ $t('constants.customerEmail') }}:</v-col>
           <v-col cols="6" class="font-light">{{ session.customer_details?.email }}</v-col>
         </v-row>
+
+        <div class="mt-10">
+          <v-btn
+            class="w-full justify-center"
+            color="primary"
+          >
+            Return to DBS Checks Online
+          </v-btn>
+        </div>
+
       </v-card>
     </template>
+
+
   </v-card>
 </template>
 
@@ -39,9 +51,7 @@
 
 import {useStorage} from "@vueuse/core";
 
-definePageMeta({
-  layout: 'simple',
-})
+
 const props = defineProps({
   isCancelled: {
     type: Boolean,
@@ -74,15 +84,17 @@ if (props.isCancelled) {
   //not to late to revisit the application
   if (sessionId) {
     const {data, success} = await $fetch(`/api/stripe/checkout/sessions/${sessionId}`)
-    session.value = data
-    if (data && applicationId) {
-      const {data: application, success} = await $fetch(`/api/applications/${applicationId}`)
-      application.paymentStatus = 'cancelled'
-      application.checkoutSessionId = sessionId
-      await $fetch(`/api/applications/${applicationId}`, {
-        method: 'PUT',
-        body: application
-      })
+    if (success) {
+      session.value = data
+      if (data && applicationId) {
+        const {data: application, success} = await $fetch(`/api/applications/${applicationId}`)
+        application.paymentStatus = 'cancelled'
+        application.checkoutSessionId = sessionId
+        await $fetch(`/api/applications/${applicationId}`, {
+          method: 'PUT',
+          body: application
+        })
+      }
     }
   }
 

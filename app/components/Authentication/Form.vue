@@ -1,6 +1,6 @@
 <template>
 
-  <v-card class="w-[400px] mt-20 mx-auto p-10 rounded-lg border text-center">
+  <v-card class="w-[400px] mt-40 mx-auto p-10 rounded-lg border text-center">
     <template #title>
       <v-icon
         class="mb-2"
@@ -202,7 +202,7 @@ const onSubmit = handleSubmit(async values => {
 
     const route = useRoute()
     const to = route.query?.redirectTo as string
-    await navigateTo(localePath(to || '/'))
+    await navigateTo(localePath(to || '/apply'))
 
   }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

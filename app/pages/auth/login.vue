@@ -4,10 +4,6 @@
 
 <script setup lang="ts">
 
-definePageMeta({
-  layout: 'simple',
-})
-
 </script>
 
 

@@ -12,8 +12,8 @@
     "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
+    "@fontsource/roboto": "^5.2.8",
     "@libsql/client": "^0.15.14",
-    "@nuxt/content": "^3.6.3",
     "@nuxt/eslint": "^1.9.0",
     "@nuxt/fonts": "^0.11.4",
     "@nuxt/icon": "^2.0.0",
@@ -39,7 +39,8 @@
     "vue": "^3.5.20",
     "vue-router": "^4.5.1",
     "vuetify-nuxt-module": "^0.18.7",
-    "vuetify-sonner": "^0.3.21"
+    "vuetify-sonner": "^0.3.21",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@stripe/stripe-js": "^7.9.0",

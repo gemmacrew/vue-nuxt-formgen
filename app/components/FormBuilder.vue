@@ -12,10 +12,12 @@
               v-bind="field.props"
               :error-message="errors"
               :readonly="readonly"
-              clearable="!readonly"
+              @focused="onFocus"
+              :clearable="!readonly"
               class="mt-[5px]"
               @update:model-value="onUpdate($event, key)"/>
           </template>
+
         </v-form>
       </v-col>
       <v-col cols="12" sm="12" md="6" xl="8">
@@ -23,11 +25,7 @@
           style="height: 100%;
           border: 1px solid #E2E2E2;
           background-color: rgba(253,241,220,0.44);">
-          <div class="p-2 text-left text-base text-gray-800/90">
-            <p v-for="(note, index) in notes" class="mb-5" :key="index">
-              {{ rt(note) }}
-            </p>
-          </div>
+
         </div>
       </v-col>
     </v-row>
@@ -38,16 +36,16 @@
 <script setup>
 
 import InputField from "~/components/Fields/InputField.vue";
-import NameHistoryField from "~/components/Fields/NameHistoryField.vue";
-import AddressHistoryField from "~/components/Fields/AddressHistoryField.vue";
+import NameListManager from "~/components/Fields/NameListManager.vue";
+import AddressListManager from "~/components/Fields/AddressListManager.vue";
 import SelectField from "~/components/Fields/SelectField.vue";
 import RadioField from "~/components/Fields/RadioField.vue";
 import CheckboxField from "~/components/Fields/CheckboxField.vue";
 import {useForm} from "vee-validate";
 import {toTypedSchema} from "@vee-validate/zod";
-import {useSchema} from '#shared/composables/useSchema'
+import {useSchema} from '#shared/composables/useSchema.ts'
 
-const {tm, rt} = useI18n()
+const {t, tm, rt, te} = useI18n()
 const emits = defineEmits(['update'])
 const props = defineProps({
   formName: String,
@@ -64,8 +62,8 @@ const props = defineProps({
 const componentMap = {
   InputField,
   SelectField,
-  NameHistoryField,
-  AddressHistoryField,
+  NameListManager,
+  AddressListManager,
   RadioField,
   CheckboxField
 }
@@ -76,7 +74,7 @@ const {errors, meta} = useForm({
   validationSchema: toTypedSchema(schema[props.formName] || {}),
 })
 
-const notes = tm(`forms.${props.formName}.notes`)
+const notes = ref(tm(`forms.${props.formName}.notes`))
 const fieldValues = ref({})
 
 Object.keys(props.fields).forEach((key) => {
@@ -85,6 +83,16 @@ Object.keys(props.fields).forEach((key) => {
   }
 })
 
+const onFocus = (focused, key) => {
+
+  debugger
+  if (te(`components.fields.${key}.hint`)) {
+    debugger
+    notes.value = [t(`components.fields.${key}.hint`)]
+  } else {
+    notes.value = tm(`forms.${props.formName}.notes`).map(note => rt(note))
+  }
+}
 watch(() => props.data, (data) => {
   Object.keys(props.fields).forEach((key) => {
     if (data[key]) {

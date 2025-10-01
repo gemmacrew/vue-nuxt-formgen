@@ -25,6 +25,17 @@
       :class="{ dirty: meta.dirty, valid: meta.valid, invalid: !meta.valid, touched: meta.touched }"
     />
     <v-text-field
+      v-else-if="props.type === 'number'"
+      :label="computedLabel"
+      variant="outlined"
+      type="number"
+      v-model="value"
+      v-bind="$attrs"
+      @blur="handleBlur"
+      :class="{ dirty: meta.dirty, valid: meta.valid, invalid: !meta.valid, touched: meta.touched }"
+      :error-messages="computedErrorMessage"
+      />
+    <v-text-field
       v-else
       :label="computedLabel"
       variant="outlined"

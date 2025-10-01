@@ -36,6 +36,20 @@
       "when": 1758790869571,
       "tag": "0004_flat_iron_monger",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1759248138184,
+      "tag": "0005_cultured_sentry",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1759248193404,
+      "tag": "0006_regular_james_howlett",
+      "breakpoints": true
     }
   ]
 }

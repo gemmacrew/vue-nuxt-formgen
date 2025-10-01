@@ -1,16 +1,17 @@
 <template>
   <template>
     <NuxtLayout>
-      <div class="mt-20 mx-2 h-full mb-2">
+
         <NuxtPage/>
-      </div>
+
     </NuxtLayout>
   </template>
 </template>
 <script setup>
 
-const appConfig = useAppConfig()
-const googleMapsApiKey = appConfig.googleMapsApiKey
+const runtimeConfig = useRuntimeConfig()
+const googleMapsApiKey = runtimeConfig.public.googleMapsApiKey
+
 useHead({
   script: [{
     src: `https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&callback=initMap&v=weekly`

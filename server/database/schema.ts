@@ -41,7 +41,7 @@ export const applications = sqliteTable('applications', t => (
     electronicResults: t.integer({mode: 'boolean'}),
     declaration: t.integer({mode: 'boolean'}),
 
-    paymentStatus: t.text({ enum: ['pending', 'paid', 'cancelled', 'failed', 'refunded', 'unpaid', 'unknown']}),
+    paymentStatus: t.text({enum: ['pending', 'paid', 'cancelled', 'failed', 'refunded', 'unpaid', 'unknown']}),
     checkoutSessionId: t.text(),
 
     createdDate: t.integer({mode: 'timestamp_ms'}).$defaultFn(() => new Date()).notNull(),
@@ -66,7 +66,8 @@ export const applicationNameHistory = sqliteTable('applicationNameHistory', t =>
 
 export const applicationAddressHistory = sqliteTable('applicationAddressHistory', t => ({
     id: t.integer().primaryKey({autoIncrement: true}),
-    applicationId: t.integer().references(() => applications.id),// person the application is for
+    type: t.text({enum: ['applicant', 'organisation']}),
+    applicationId: t.integer().references(() => applications.id),
     streetNumber: t.text().notNull(),
     route: t.text(),
     locality: t.text().notNull(),

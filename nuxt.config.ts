@@ -1,12 +1,19 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import {en as vuetifyEn} from "vuetify/locale"
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: {enabled: true},
 
   css: ['./assets/css/global.scss'],
 
+  runtimeConfig: {
+    public: {
+      googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY
+    }
+  },
+
   modules: [
-    '@nuxt/content',
     '@nuxt/eslint',
     '@nuxt/fonts',
     '@nuxt/icon',
@@ -69,7 +76,13 @@ export default defineNuxtConfig({
       /* vuetify options */
       locale: {
         locale: 'en',
-        fallback: 'en'
+        fallback: 'en',
+        messages: {
+          en: {
+            // we add the vuetify locales to our locale to prevent warnings in the console
+            $vuetify: vuetifyEn,
+          }
+        }
       },
 
       theme: {
@@ -77,7 +90,7 @@ export default defineNuxtConfig({
         themes: {
           dbsTheme: {
             colors: {
-              primary: '#00703c',
+              primary: '#184d72',
               'primary-light': '#9E247B',
               secondary: '#8EC5A8',
               'accent-primary': '#D7D2CB',
@@ -86,7 +99,7 @@ export default defineNuxtConfig({
           },
           light: {
             colors: {
-              primary: '#184e72'
+              primary: '#00703c'
             }
           },
           dark: {},

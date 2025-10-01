@@ -1,7 +1,7 @@
 <template>
 
   <reveal-container :reveal="props?.reveal || true">
-    <HistoryField v-model="value"
+    <ListManagerField v-model="value"
                   v-bind="{...$attrs}"
                   :form="form"
                   :error-message="errorMessage?.[name]"
@@ -29,12 +29,12 @@
         />
       </template>
 
-    </HistoryField>
+    </ListManagerField>
   </reveal-container>
 </template>
 
 <script setup>
-import HistoryField from "~/components/Fields/HistoryField.vue";
+import ListManagerField from "~/components/Fields/ListManagerField.vue";
 import InputField from "~/components/Fields/InputField.vue";
 import SelectField from "~/components/Fields/SelectField.vue";
 import RevealContainer from "~/components/Fields/RevealContainer.vue";

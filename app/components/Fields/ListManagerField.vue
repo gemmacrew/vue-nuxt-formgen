@@ -71,7 +71,7 @@
 
 <script setup>
 
-import {useSchema} from "~~/shared/composables/useSchema";
+import {useSchema} from "#shared/composables/useSchema.ts";
 import {toTypedSchema} from "@vee-validate/zod";
 
 const emits = defineEmits(['update:model-value', 'save', 'cancel'])
@@ -92,8 +92,8 @@ const fieldValues = ref({})
 const schema = useSchema()
 const validationSchema = schema[props.form.schema] || {}
 
-Object.keys(props.form.fields).forEach(key => {
-  fieldValues.value[key] = null
+Object.entries(props.form.fields).forEach(([key, value]) => {
+  fieldValues.value[key] = value.props?.default || null
 })
 
 const {push, remove, fields} = useFieldArray(props.name)

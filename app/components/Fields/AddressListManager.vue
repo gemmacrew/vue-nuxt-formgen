@@ -1,6 +1,6 @@
 <template>
 
-  <HistoryField v-model="value"
+  <ListManagerField v-model="value"
                 v-bind="{...$attrs}"
                 :form="form"
                 :error-message="errorMessage?.[name]"
@@ -47,14 +47,14 @@
 
     </template>
 
-  </HistoryField>
+  </ListManagerField>
 
 </template>
 
 <script setup>
 
 import InputField from "~/components/Fields/InputField.vue";
-import HistoryField from "~/components/Fields/HistoryField.vue";
+import ListManagerField from "~/components/Fields/ListManagerField.vue";
 import SelectField from "~/components/Fields/SelectField.vue";
 
 const props = defineProps({
@@ -86,7 +86,6 @@ let token
 let autocompleteSuggestion
 
 onMounted(async () => {
-
   const {AutocompleteSessionToken, AutocompleteSuggestion} =
     await google.maps.importLibrary("places");
 

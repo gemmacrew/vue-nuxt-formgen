@@ -4,6 +4,7 @@ const addressDetails = {
   icon: 'mdi-home-circle',
   schema: 'addressDetails',
   fields: {
+    type: {props: {autocomplete: 'off', default: 'applicant', hidden: true}},
     streetNumber: {props: {autocomplete: 'off'}},
     route: {props: {autocomplete: 'off'}},
     locality: {props: {autocomplete: 'off'}},
@@ -31,7 +32,6 @@ const datedAddressDetails = deepmerge(addressDetails, {
     }
   }
 })
-
 const nameDetails = {
   icon: 'mdi-account-circle',
   schema: 'nameDetails',
@@ -59,7 +59,6 @@ const nameDetails = {
     }
   }
 }
-
 const applicantDetails = {
   icon: 'mdi-account-circle',
   fields: {
@@ -83,7 +82,7 @@ const applicantDetails = {
       component: 'RadioField'
     },
     previousNameHistory: {
-      component: 'NameHistoryField',
+      component: 'NameListManager',
       props: {
         form: nameDetails,
         reveal: (application: { hasNameHistory: boolean }) => {
@@ -93,7 +92,6 @@ const applicantDetails = {
     }
   }
 }
-
 const birthDetails = {
   icon: 'mdi-cake-variant',
   fields: {
@@ -127,32 +125,33 @@ const birthDetails = {
     mothersMaidenName: {},
   }
 }
-
 const organisationDetails = {
   icon: 'mdi-office-circle',
   fields: {
     organisationName: {},
     organisationAddress: {
-      component: 'AddressHistoryField',
+      component: 'AddressListManager',
       props: {
-        form: addressDetails,
+        form: deepmerge({}, addressDetails, {
+          fields: {
+            type: {props: {default: 'organisation'}},
+          }
+        }),
       }
     },
   }
 }
-
 const addressHistory = {
   icon: 'mdi-home-circle',
   fields: {
     addressHistory: {
-      component: 'AddressHistoryField',
+      component: 'AddressListManager',
       props: {
         form: datedAddressDetails,
       }
     },
   }
 }
-
 const additionalInfoDetails = {
   icon: 'mdi-information',
   fields: {
@@ -272,16 +271,24 @@ const positionDetails = {
       component: 'SelectField',
       props: {
         itemsReference: 'lists.positions',
-        type: 'autocomplete'
+        type: 'autocomplete',
+        placeholder: "Please select your position from the list below...",
+        hint: "If your exact job role isn't listed, please find the nearest description.",
+        'persistent-hint': true
       }
     },
     jobDescription: {
       props: {
         type: 'textarea',
+        placeholder: "Please provide a brief job description and where your work will be carried out, and explain how your role meets the criteria for this level of DBS check.",
+        'persistent-hint': true
       }
     },
     contractualAgreement: {
-      component: 'CheckboxField'
+      component: 'CheckboxField',
+      props: {
+        hint: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
+      }
     },
     eligibilityGuidelines: {
       component: 'CheckboxField'
@@ -297,25 +304,26 @@ const positionDetails = {
     }
   }
 }
-
 const basicAdditionalInfoDetails = deepmerge({}, additionalInfoDetails, {
   fields: {
     passportDob: {props: {hidden: true}},
     passportNationality: {props: {hidden: true}},
-    passportIssueDate: {props: {hidden: true}}
+    passportIssueDate: {props: {hidden: true}},
+    drivingLicenceDob: {props: {hidden: true}},
+    drivingLicenceValidFromDate: {props: {hidden: true}},
+    drivingLicenceType: {props: {hidden: true}},
+    drivingLicenceCountryOfIssue: {props: {hidden: true}},
   }
 })
 
 export default defineAppConfig({
-  googleMapsApiKey: 'AIzaSyDuHCycrOUqB1PEnzTVSXSfEofuwuM31Ig',
-
   applicationTypes: {
     basic: {
       forms: {
         applicantDetails,
         birthDetails,
         addressHistory,
-        additionalInfoDetails: basicAdditionalInfoDetails,
+        basicAdditionalInfoDetails,
         confirmationDetails
       }
     },

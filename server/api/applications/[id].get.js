@@ -2,7 +2,6 @@ export default defineEventHandler(async (event) => {
 
 	const id = getRouterParam(event, 'id')
 	const session = await getUserSession(event)
-	console.log(session)
 
 	const application = await db.query.applications.findFirst({
 		where: eq(tables.applications.id, Number(id)),
