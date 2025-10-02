@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-20 mx-3">
+  <div class="mt-20 mx-auto max-w-[1000px]">
     <v-card class="w-full rounded-lg border h-full">
       <v-card-title>
         <img src="../../assets/images/trust-hands.png" alt="DBS Checks" class="mx-auto w-20">

@@ -69,7 +69,7 @@ export default defineNuxtConfig({
       /* module specific options */
       // disableVuetifyStyles: true,
       // styles: {
-      //   configFile: './assets/css/components.scss'
+      //   configFile: 'assets/css/components.scss'
       // },
     },
     vuetifyOptions: {
@@ -94,7 +94,8 @@ export default defineNuxtConfig({
               'primary-light': '#9E247B',
               secondary: '#8EC5A8',
               'accent-primary': '#D7D2CB',
-              'accent-secondary': '#E0C6AD'
+              'accent-secondary': '#E0C6AD',
+              'background': '#F5F5F5',
             }
           },
           light: {
