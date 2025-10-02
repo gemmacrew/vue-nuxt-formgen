@@ -4,7 +4,7 @@ const addressDetails = {
   icon: 'mdi-home-circle',
   schema: 'addressDetails',
   fields: {
-    type: {props: {default: 'applicant', hidden: true}},
+    type: {props: {defaultValue: 'applicant', hidden: true}},
     streetNumber: {props: {}},
     route: {props: {}},
     locality: {props: {}},
@@ -135,7 +135,7 @@ const organisationDetails = {
       props: {
         form: deepmerge({}, addressDetails, {
           fields: {
-            type: {props: {default: 'organisation'}},
+            type: {props: {defaultValue: 'organisation'}},
           }
         }),
       }

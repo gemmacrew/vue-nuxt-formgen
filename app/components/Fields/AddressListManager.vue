@@ -138,8 +138,8 @@ const onUpdateValue = async (selectedAddress, fieldValues) => {
     const {value: placeId} = selectedAddress
     geocoder.geocode({placeId}, async (results, status) => {
       if (status === 'OK') {
-        Object.keys(props.form.fields).forEach(key => {
-          fieldValues[key] = results[0].address_components.find(c => c.types.includes(toSnakeCase(key)))?.long_name
+        Object.entries(props.form.fields).forEach(([key, field]) => {
+          fieldValues[key] = results[0].address_components.find(c => c.types.includes(toSnakeCase(key)))?.long_name || field.props.defaultValue || ''
         })
       }
     })

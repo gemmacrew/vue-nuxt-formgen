@@ -101,7 +101,7 @@ const validationSchema = schema[props.form.schema] || {}
 const initFieldValues = (fields) => {
   showHistoryItemCard.value = false
   Object.entries(fields).forEach(([key, value]) => {
-    fieldValues.value[key] = value.props?.default || null
+    fieldValues.value[key] = value.props?.defaultValue || null
   })
   editIndex.value = -1
 }

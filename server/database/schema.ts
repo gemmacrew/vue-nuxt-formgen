@@ -54,6 +54,11 @@ export const applications = sqliteTable('applications', t => (
     positionAppliedFor: t.text(),
     jobDescription: t.text(),
     organisationName: t.text(),
+    contractualAgreement: t.integer({mode: 'boolean'}),
+    eligibilityGuidelines: t.integer({mode: 'boolean'}),
+    dbsGuidelines: t.integer({mode: 'boolean'}),
+    dbsCodeOfConduct: t.integer({mode: 'boolean'}),
+    dbsIdentityCheckingGuidelines: t.integer({mode: 'boolean'}),
 
     //confirmation details
     electronicResults: t.integer({mode: 'boolean'}),

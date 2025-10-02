@@ -214,6 +214,11 @@ const OrganisationDetailsSchema = z.object({
 const PositionDetailsSchema = z.object({
   positionAppliedFor: z.string('isRequired').trim().min(1, 'isRequired'),
   jobDescription: z.string('isRequired').trim().min(1, 'isRequired'),
+  contractualAgreement: z.literal(true, 'acknowledge'),
+  eligibilityGuidelines: z.literal(true, 'acknowledge'),
+  dbsGuidelines: z.literal(true, 'acknowledge'),
+  dbsCodeOfConduct: z.literal(true, 'acknowledge'),
+  dbsIdentityCheckingGuidelines: z.literal(true, 'acknowledge'),
 })
 
 const BasicApplicationSchema = z.object({
