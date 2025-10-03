@@ -1,5 +1,4 @@
 import {sqliteTable} from 'drizzle-orm/sqlite-core'
-import {z} from "zod/v4/index";
 
 export const users = sqliteTable('users', t => ({
     email: t.text().primaryKey(),

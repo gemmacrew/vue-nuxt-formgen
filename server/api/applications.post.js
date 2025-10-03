@@ -9,6 +9,7 @@ export default defineEventHandler(async (event) => {
 
 		const {application: applicationSchema} = useSchema()
 		const {type} = await readValidatedBody(event, typeSchema.parse)
+		const db = useDrizzle()
 
 		try {
 			const application = await readValidatedBody(event, applicationSchema[type].parse)

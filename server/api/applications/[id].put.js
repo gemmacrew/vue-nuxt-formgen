@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     const application = await readValidatedBody(event, applicationSchema[applicationType].parse)
-
+		const db = useDrizzle()
     //
     const {
       id: ignoreId,

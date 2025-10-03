@@ -7,12 +7,13 @@ const loginSchema = z.object({
 
 export default defineEventHandler(async (event) => {
 
+  const db = useDrizzle()
   const body = await readValidatedBody(event, loginSchema.parse)
   const user = await db.query.users.findFirst({
     where: eq(tables.users.email, body.email),
   })
 
-  if (!user) {
+  if (!user || !user.passwordHash) {
     throw createError({
       statusCode: 401,
       statusMessage: 'Unauthorized',

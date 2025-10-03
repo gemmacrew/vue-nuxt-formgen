@@ -13,6 +13,14 @@ export default defineNuxtConfig({
     }
   },
 
+  nitro: {
+    preset: 'cloudflare-pages'
+  },
+
+  hub: {
+    database: true
+  },
+
   modules: [
     '@nuxt/eslint',
     '@nuxt/fonts',
@@ -24,7 +32,8 @@ export default defineNuxtConfig({
     '@vee-validate/nuxt',
     '@pinia/nuxt',
     '@nuxtjs/i18n',
-    '@unlok-co/nuxt-stripe'
+    '@unlok-co/nuxt-stripe',
+    '@nuxthub/core'
   ],
 
   stripe: {

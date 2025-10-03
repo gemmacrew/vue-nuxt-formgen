@@ -2,6 +2,7 @@ export default defineEventHandler(async (event) => {
 
 	const id = getRouterParam(event, 'id')
 	const session = await getUserSession(event)
+	const db = useDrizzle()
 
 	const application = await db.query.applications.findFirst({
 		where: eq(tables.applications.id, Number(id)),

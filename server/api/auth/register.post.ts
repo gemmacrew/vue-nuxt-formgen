@@ -1,4 +1,4 @@
-import { z } from 'zod/v4'
+import {z} from 'zod/v4'
 
 const registerSchema = z.object({
   email: z.email(),
@@ -7,6 +7,7 @@ const registerSchema = z.object({
 export default defineEventHandler(async (event) => {
   const body = await readValidatedBody(event, registerSchema.parse)
   const hashedPassword = await hashPassword(body.password)
+  const db = useDrizzle()
   const [user] = await db.insert(tables.users).values({
     email: body.email,
     passwordHash: hashedPassword,
@@ -19,5 +20,5 @@ export default defineEventHandler(async (event) => {
     lastLogin: new Date(),
   })
 
-  return { success: true }
+  return {success: true}
 })

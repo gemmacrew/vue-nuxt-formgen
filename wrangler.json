@@ -1,0 +1,15 @@
+{
+  "name": "dbs-checks",
+  "compatibility_date": "2024-09-26",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "d1_databases": [
+    {
+      "binding": "dbs-checks",
+      "database_name": "dbs-checks",
+      "database_id": "c7ce592c-f814-43bf-a380-21b65bc5e84f",
+      "remote": true
+    }
+  ]
+}
