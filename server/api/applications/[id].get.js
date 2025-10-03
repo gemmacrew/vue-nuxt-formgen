@@ -1,36 +1,46 @@
 export default defineEventHandler(async (event) => {
 
 	const id = getRouterParam(event, 'id')
-	const session = await getUserSession(event)
 	const db = useDrizzle()
 
-	const application = await db.query.applications.findFirst({
-		where: eq(tables.applications.id, Number(id)),
-	})
+	let application = null
 
-	if (application) {
-		const previousNameHistory = await db.query.applicationNameHistory.findMany({
-			where: eq(tables.applicationNameHistory.applicationId, Number(application.id)),
+	try {
+
+		application = await db.query.applications.findFirst({
+			where: eq(tables.applications.id, Number(id)),
 		})
 
-		const addressHistory = await db.query.applicationAddressHistory.findMany({
-			where: eq(tables.applicationAddressHistory.applicationId, Number(application.id)),
-		})
+		if (application) {
+			const previousNameHistory = await db.query.applicationNameHistory.findMany({
+				where: eq(tables.applicationNameHistory.applicationId, Number(application.id)),
+			})
 
-		return {
-			success: true,
-			data: {
-				...application,
-				previousNameHistory,
-				addressHistory: addressHistory.filter(address => address.type === 'applicant'),
-				organisationAddress: addressHistory.filter(address => address.type === 'organisation')
+			const addressHistory = await db.query.applicationAddressHistory.findMany({
+				where: eq(tables.applicationAddressHistory.applicationId, Number(application.id)),
+			})
+
+			return {
+				success: true,
+				data: {
+					...application,
+					previousNameHistory,
+					addressHistory: addressHistory.filter(address => address.type === 'applicant'),
+					organisationAddress: addressHistory.filter(address => address.type === 'organisation')
+				}
 			}
 		}
-	}
 
-	return {
-		success: false,
-		data: application
+		return {
+			success: false,
+			data: application
+		}
+
+	} catch (ex) {
+		return {
+			success: false,
+			error: `${ex?.message}: ${application}`
+		}
 	}
 
 })

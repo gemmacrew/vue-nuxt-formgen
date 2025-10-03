@@ -1,15 +1,14 @@
 <template>
   <application-form v-if="ready" :application="application" @update="Object.assign(application, $event)" @pay-now="onPayNow"/>
-  <v-skeleton-loader v-else type="card" />
 </template>
 <script setup>
 
 import ApplicationForm from "~/components/Application/Form.vue";
 import {useStorage} from "@vueuse/core";
 
-definePageMeta({
-  middleware: ['auth'],
-})
+// definePageMeta({
+//   middleware: ['auth'],
+// })
 
 const ready = ref(false)
 const application = useStorage('dbs-application', {})
@@ -18,9 +17,14 @@ const id = route.params.id
 
 try {
 
-  const {data} = await $fetch(`/api/applications/${id}`)
-  application.value = data
-  ready.value = true
+  const response = await $fetch(`/api/applications/${id}`)
+  console.log(response)
+  if (response.success) {
+    application.value = response.data
+    ready.value = true
+  }else {
+    console.log('###: ', response)
+  }
 
 } catch (ex) {
   console.log(ex)

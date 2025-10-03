@@ -6,15 +6,19 @@ const typeSchema = z.object({
 	type: z.enum(['basic', 'standard', 'enhanced'])
 })
 
-
 export default defineEventHandler(async (event) => {
 		const {application: applicationSchema} = useSchema()
 		const stripe = await useServerStripe(event);
 		const {type} = await readValidatedBody(event, typeSchema.parse)
 		const db = useDrizzle()
 
+	const log = []
+		let application = null
+
 		try {
-			const application = await readValidatedBody(event, applicationSchema[type].parse)
+			application = await readValidatedBody(event, applicationSchema[type].parse)
+			log.push('AAA')
+			log.push(application)
 
 			let user = await db.query.users.findFirst({
 				where: eq(tables.users.email, application.email),
@@ -24,6 +28,8 @@ export default defineEventHandler(async (event) => {
 				([user] = await db.insert(tables.users).values({
 					email: application.email,
 				}).returning())
+				log.push('BBB')
+				log.push(user)
 			}
 
 			let stripeCustomerId = user.stripeCustomerId
@@ -63,11 +69,17 @@ export default defineEventHandler(async (event) => {
 					method: 'PUT',
 					body: application
 				})
+
+				log.push('CCC')
+				log.push(response)
+
 			} else {
 				response = await $fetch(`/api/applications`, {
 					method: 'POST',
 					body: application
 				})
+				log.push('DDD')
+				log.push(response)
 			}
 
 			const {id: applicationId} = response.data
@@ -80,8 +92,8 @@ export default defineEventHandler(async (event) => {
 					},
 				],
 				mode: 'payment',
-				success_url: `http://localhost:3000/payment/success?session_id={CHECKOUT_SESSION_ID}&application_id=${applicationId}`,
-				cancel_url: `http://localhost:3000/payment/cancelled?session_id={CHECKOUT_SESSION_ID}&application_id=${applicationId}`,
+				success_url: `https://dbs-online-gemmacrew.nuxt.dev/payment/success?session_id={CHECKOUT_SESSION_ID}&application_id=${applicationId}`,
+				cancel_url: `https://dbs-online-gemmacrew.nuxt.dev/payment/cancelled?session_id={CHECKOUT_SESSION_ID}&application_id=${applicationId}`,
 				customer: stripeCustomerId
 			});
 
@@ -97,7 +109,7 @@ export default defineEventHandler(async (event) => {
 		} catch (ex) {
 			return {
 				success: false,
-				error: ex?.message
+				error: `${ex?.message}: ${JSON.stringify(log)}`
 			}
 		}
 	}

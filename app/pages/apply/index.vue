@@ -38,10 +38,15 @@ const onPayNow = async () => {
         },
       })
 
-      const {url} = response
-      navigateTo(url, {external: true})
+      const {success, url} = response
+      if (success && url) {
+        navigateTo(url, { external: true })
+      } else {
+        console.error(response)
+      }
+
     } else {
-      console.log(parsed.error.message)
+      console.error(parsed.error.message)
     }
 
   } catch (ex) {

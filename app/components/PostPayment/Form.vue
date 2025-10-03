@@ -34,6 +34,7 @@
           <v-btn
             class="w-full justify-center"
             color="primary"
+            @click="navigateTo('/')"
           >
             Return to DBS Checks Online
           </v-btn>
@@ -61,9 +62,7 @@ const props = defineProps({
 
 const session = ref(null)
 const route = useRoute()
-const storedApplication = useStorage('dbs-application', {})
 const {session_id: sessionId, application_id: applicationId} = route.query
-
 
 const context = computed(() => {
 
@@ -80,33 +79,18 @@ const context = computed(() => {
   }
 })
 
+const paymentStatus = ref('paid')
 if (props.isCancelled) {
-  //not to late to revisit the application
-  if (sessionId) {
-    const {data, success} = await $fetch(`/api/stripe/checkout/sessions/${sessionId}`)
+  paymentStatus.value = 'cancelled'
+}
+
+if (sessionId) {
+  const {data, success} = await $fetch(`/api/stripe/checkout/sessions/${sessionId}`)
+  session.value = data
+  if (success && applicationId) {
+    const {data: application, success} = await $fetch(`/api/applications/${applicationId}`)
     if (success) {
-      session.value = data
-      if (data && applicationId) {
-        const {data: application, success} = await $fetch(`/api/applications/${applicationId}`)
-        application.paymentStatus = 'cancelled'
-        application.checkoutSessionId = sessionId
-        await $fetch(`/api/applications/${applicationId}`, {
-          method: 'PUT',
-          body: application
-        })
-      }
-    }
-  }
-
-} else {
-  storedApplication.value = {}
-
-  if (sessionId) {
-    const {data, success} = await $fetch(`/api/stripe/checkout/sessions/${sessionId}`)
-    session.value = data
-    if (data && applicationId) {
-      const {data: application, success} = await $fetch(`/api/applications/${applicationId}`)
-      application.paymentStatus = 'paid'
+      application.paymentStatus = paymentStatus.value
       application.checkoutSessionId = sessionId
       await $fetch(`/api/applications/${applicationId}`, {
         method: 'PUT',

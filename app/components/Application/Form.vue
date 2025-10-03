@@ -1,9 +1,9 @@
 <template>
-  <div class="mt-20 mx-auto max-w-[1000px]">
+  <div class="mt-20">
     <v-card class="w-full rounded-lg border h-full">
-      <v-card-title>
+      <v-card-title class="max-w-520px mx-auto">
         <img src="../../assets/images/trust-hands.png" alt="DBS Checks" class="mx-auto w-20">
-        <div style="font-size: 24px;" class="text-center">
+        <div style="font-size: 24px;" class="mx-auto whitespace-normal text-center">
           {{ $t(`pages.application.${application.type}.title`) }}
         </div>
       </v-card-title>

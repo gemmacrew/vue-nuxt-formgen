@@ -92,8 +92,8 @@ const NameDetailsSchema = z.object({
   firstName: z.string('isRequired').trim().min(1, 'isRequired'),
   middleName: z.string().nullish().optional(),
   lastName: z.string('isRequired').trim().min(1, 'isRequired'),
-  fromDate: z.coerce.date('isRequired').max(new Date(), 'dateBeforeToday'),
-  toDate: z.coerce.date('isRequired').max(new Date(), 'dateBeforeToday'),
+  fromDate: z.coerce.date('isRequired'),
+  toDate: z.coerce.date('isRequired'),
 })
   .refine(...Object.values(dateValidRefiner('fromDate')))
   .refine(...Object.values(dateValidRefiner('toDate')))
@@ -112,7 +112,7 @@ const AddressDetailsSchema = z.object({
 })
 
 const DatedAddressDetailsSchema = AddressDetailsSchema.extend({
-  fromDate: z.coerce.date('isRequired').max(new Date(), 'dateBeforeToday')
+  fromDate: z.coerce.date('isRequired')
 })
   .refine(...Object.values(dateValidRefiner('fromDate')))
 
@@ -174,7 +174,7 @@ const RefinedBasicAdditionalInfoDetailsSchema = BasicAdditionalInfoDetailsSchema
 
 const BirthDetailsSchema = z.object({
   gender: z.enum(["male", "female", "other"], 'isRequired'),
-  dob: z.coerce.date('isRequired').max(new Date(), 'dateBeforeToday'),
+  dob: z.coerce.date('isRequired'),
   townOfBirth: z.string('isRequired').trim().min(1, 'isRequired'),
   countryOfBirth: z.string('isRequired').trim().min(1, 'isRequired'),
   nationalityAtBirth: z.string('isRequired').trim().min(1, 'isRequired'),
