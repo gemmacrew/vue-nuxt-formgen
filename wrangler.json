@@ -4,6 +4,10 @@
   "compatibility_flags": [
     "nodejs_compat"
   ],
+  "main": "src/index.ts",
+  "assets": {
+    "directory": "./dist"
+  },
   "d1_databases": [
     {
       "binding": "dbs-checks",
